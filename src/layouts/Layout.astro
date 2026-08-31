@@ -13,7 +13,9 @@ import "~/styles/global.css";
     <title>Astro Basics</title>
   </head>
   <body>
-    <slot />
+    <main class="flex flex-col items-center p-24 [&>section]:max-w-192">
+      <slot />
+    </main>
   </body>
 </html>
 
