@@ -1,19 +1,25 @@
-import type { NotionClientError, QueryDataSourceResponse } from "@notionhq/client";
+import type { NotionClientError } from "@notionhq/client";
 import { type InfiniteQueryExecuteOptions } from "@tanstack/query-core";
 
-import type { NotionAPIPage } from "~/types";
+interface NotionInfiniteResponse<T> {
+  next_cursor: string | null;
+  results: T[];
+}
 
-export type InfiniteNotionQueryOptions<TQueryKey extends string[] = string[]> = InfiniteQueryExecuteOptions<
-  QueryDataSourceResponse,
+export type InfiniteNotionQueryOptions<T> = InfiniteQueryExecuteOptions<
+  NotionInfiniteResponse<T>,
   NotionClientError,
-  NotionAPIPage[],
-  TQueryKey,
+  T[],
+  string[],
   string | null
 >
 
-export const commonInfiniteQueryOptions = {
+export const getCommonInfiniteQueryOptions = <T>(
+  queryOptions: Omit<InfiniteNotionQueryOptions<T>, 'initialPageParam'>,
+) => ({
   pages: Infinity,
   initialPageParam: null,
   getNextPageParam: (lastPage) => lastPage.next_cursor,
   select: (data) => data.pages.flatMap((page) => page.results),
-} satisfies Partial<InfiniteNotionQueryOptions>;
+  ...queryOptions,
+} satisfies InfiniteNotionQueryOptions<T>);
