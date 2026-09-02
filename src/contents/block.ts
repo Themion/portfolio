@@ -1,6 +1,7 @@
 import type { ListBlockChildrenResponse } from "@notionhq/client";
+import type { AstroIntegrationLogger } from "astro";
 
-import { notionClient, queryClient } from "./client";
+import { getQueryClient, notionClient } from "./client";
 import { getCommonInfiniteQueryOptions } from "./common";
 
 interface Block {
@@ -22,17 +23,26 @@ export const getBlockQueryOptions = (block_id: string) => getCommonInfiniteQuery
   }),
 })
 
-export const getBlockQuery = async (blockId: string) => {
-  return await queryClient.infiniteQuery(getBlockQueryOptions(blockId));
-};
+export const getBlockQuery = (logger: AstroIntegrationLogger) => {
+  const queryClient = getQueryClient(logger);
 
-export const withChildren = async <T extends Block>(block: T): Promise<WithChildren<T>> => {
-  if (block.has_children === false) {
-    return Object.assign(structuredClone(block), { children: [] });
-  } 
+  return async (blockId: string) => {
+    return await queryClient.infiniteQuery(getBlockQueryOptions(blockId));
+  };
+}
 
-  const rawChildren = await getBlockQuery(block.id);
-  const children = await Promise.all(rawChildren.map(withChildren));
+export const withChildren = (logger: AstroIntegrationLogger) => {
+  const getChildrenByBlockId = getBlockQuery(logger);
 
-  return Object.assign(structuredClone(block), { children })
-};
+  return async <T extends Block>(block: T): Promise<WithChildren<T>> => {
+    if (block.has_children === false) {
+      return Object.assign(structuredClone(block), { children: [] });
+    }
+  
+    const rawChildren = await getChildrenByBlockId(block.id);
+    const children = await Promise.all(rawChildren.map((withChildren(logger))));
+  
+    return Object.assign(structuredClone(block), { children })
+  };
+  
+}
