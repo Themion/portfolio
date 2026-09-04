@@ -1,0 +1,10 @@
+---
+import type { NotionPropertyProps } from './types';
+
+type Props = NotionPropertyProps<'unique_id'>;
+
+const { property } = Astro.props;
+const { prefix, number } = property.unique_id;
+---
+
+{number !== null && <span class="notion-property-unique-id">{prefix ? `${prefix}-${number}` : number}</span>}
