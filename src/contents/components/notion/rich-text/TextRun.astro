@@ -1,0 +1,62 @@
+---
+import type { RichTextItemResponse } from '@notionhq/client';
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+
+import Bold from './Bold.astro';
+import Color from './Color.astro';
+import Equation from './Equation.astro';
+import InlineCode from './InlineCode.astro';
+import Italic from './Italic.astro';
+import Link from './Link.astro';
+import Strikethrough from './Strikethrough.astro';
+import TextRun from './TextRun.astro';
+import TimeRange from './TimeRange.astro';
+import Underline from './Underline.astro';
+
+interface Wrapper {
+  Component: AstroComponentFactory;
+  props?: Record<string, unknown>;
+}
+
+interface Props {
+  item: RichTextItemResponse;
+  // Annotation wrappers still to peel off, outermost first. Defaults to the full list for `item`
+  // on the initial call; each recursive call passes the tail, one layer closer to the base content.
+  wrappers?: Wrapper[];
+}
+
+// Outermost wrapper first — the reverse of application order, since each later annotation wraps
+// around everything applied before it (color ends up outermost, link/code stay closest to the text).
+const getWrappers = (item: RichTextItemResponse): Wrapper[] => {
+  const { annotations } = item;
+  const wrappers: Wrapper[] = [];
+
+  if (annotations.color !== 'default') wrappers.push({ Component: Color, props: { color: annotations.color } });
+  if (annotations.strikethrough) wrappers.push({ Component: Strikethrough });
+  if (annotations.underline) wrappers.push({ Component: Underline });
+  if (annotations.italic) wrappers.push({ Component: Italic });
+  if (annotations.bold) wrappers.push({ Component: Bold });
+  if (annotations.code) wrappers.push({ Component: InlineCode });
+  if (item.type === 'text' && item.text.link) wrappers.push({ Component: Link, props: { href: item.text.link.url } });
+
+  return wrappers;
+};
+
+const { item, wrappers = getWrappers(item) } = Astro.props;
+const [wrapper, ...rest] = wrappers;
+const Wrapper = wrapper?.Component;
+---
+
+{
+  Wrapper ? (
+    <Wrapper {...(wrapper.props ?? {})}>
+      <TextRun item={item} wrappers={rest} />
+    </Wrapper>
+  ) : item.type === 'equation' ? (
+    <Equation expression={item.equation.expression} />
+  ) : item.type === 'mention' && item.mention.type === 'date' ? (
+    <TimeRange start={item.mention.date.start} end={item.mention.date.end} />
+  ) : (
+    item.plain_text
+  )
+}
