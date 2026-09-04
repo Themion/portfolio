@@ -1,8 +1,14 @@
+import type { PageObjectResponse } from "@notionhq/client";
 import type { AstroIntegrationLogger } from "astro";
+
+import type { Block } from "~/contents/components/notion";
 
 import { withChildren } from "./block";
 import { getQueryClient, notionClient } from "./client";
 import { getCommonInfiniteQueryOptions } from "./common";
+
+// What `getDataSource` actually resolves to: a Notion page plus its recursively-fetched blocks.
+export type Page = PageObjectResponse & { children: Block[] };
 
 export const getDataSourceQueryKey = (dataSourceId: string) => ['data-source', dataSourceId];
 
@@ -20,7 +26,7 @@ export const getDataSource = (dataSourceId: string) => {
   return async (logger: AstroIntegrationLogger) => {
     const queryClient = getQueryClient(logger);
     const techStackMapper = withChildren(logger);
-  
+
     const rawDataSource = await queryClient.infiniteQuery(queryOptions);
     return await Promise.all(rawDataSource.map(techStackMapper));
   };
