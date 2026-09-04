@@ -17,9 +17,6 @@ const LIST_ITEM_GROUP_TYPE: ListItemGroupType = {
 // predicate is needed to actually get `keyof ListItemGroupType` back out of the check.
 const isListItemType = (type: Block['type']): type is keyof ListItemGroupType => type in LIST_ITEM_GROUP_TYPE;
 
-// Notion returns consecutive `bulleted_list_item`/`numbered_list_item` blocks as flat siblings.
-// Group each run into a synthetic `bulleted_list`/`numbered_list` block so it renders as one
-// `<ul>`/`<ol>` instead of one per item.
 export const groupListItems = (input: Block[]): Block[] => {
   const grouped: Block[] = [];
 
