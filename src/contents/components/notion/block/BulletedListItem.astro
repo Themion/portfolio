@@ -10,11 +10,9 @@ const { block, components } = Astro.props;
 const color = block.bulleted_list_item.color;
 ---
 
-<ul>
-  <li data-notion-color={color !== 'default' ? color : undefined}>
-    <span>
-      <RichText richText={block.bulleted_list_item.rich_text} />
-    </span>
-    {block.has_children && <NotionBlocks blocks={block.children} components={components} />}
-  </li>
-</ul>
+<li data-notion-color={color !== 'default' ? color : undefined}>
+  <span>
+    <RichText richText={block.bulleted_list_item.rich_text} />
+  </span>
+  {block.has_children && <NotionBlocks blocks={block.children} components={components} />}
+</li>

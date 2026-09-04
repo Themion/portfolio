@@ -1,8 +1,10 @@
 ---
+import { groupListItems } from "~/contents/utils/group-list-items";
 import type { AstroComponent } from "~/types";
 
 import Audio from "./Audio.astro";
 import Bookmark from "./Bookmark.astro";
+import BulletedList from "./BulletedList.astro";
 import BulletedListItem from "./BulletedListItem.astro";
 import Callout from "./Callout.astro";
 import ChildDatabase from "./ChildDatabase.astro";
@@ -18,6 +20,7 @@ import Heading from "./Heading.astro";
 import Image from "./Image.astro";
 import LinkPreview from "./LinkPreview.astro";
 import LinkToPage from "./LinkToPage.astro";
+import NumberedList from "./NumberedList.astro";
 import NumberedListItem from "./NumberedListItem.astro";
 import Paragraph from "./Paragraph.astro";
 import Pdf from "./Pdf.astro";
@@ -42,6 +45,7 @@ import Video from "./Video.astro";
 const defaultBlockComponents = {
   audio: Audio,
   bookmark: Bookmark,
+  bulleted_list: BulletedList,
   bulleted_list_item: BulletedListItem,
   callout: Callout,
   child_database: ChildDatabase,
@@ -62,6 +66,7 @@ const defaultBlockComponents = {
   image: Image,
   link_preview: LinkPreview,
   link_to_page: LinkToPage,
+  numbered_list: NumberedList,
   numbered_list_item: NumberedListItem,
   paragraph: Paragraph,
   pdf: Pdf,
@@ -93,7 +98,7 @@ const resolveComponent = (block: Block) =>
 ---
 
 {
-  blocks.map((block) => {
+  groupListItems(blocks).map((block) => {
     const Component = resolveComponent(block);
     return <Component block={block} components={components} />;
   })
