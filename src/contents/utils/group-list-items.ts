@@ -1,10 +1,6 @@
-import type { Block } from '~/contents/components/notion/block/types';
+import { randomUUID } from 'node:crypto';
 
-type ListGroupHelperType<Suffix extends string, T extends Block['type'] = Block['type']> =
-  T extends `${infer U}_list_item` ? `${U}${Suffix}` : never;
-
-type ListGroupType<T extends Block['type'] = Block['type']> = ListGroupHelperType<'_list', T>;
-type ListGroupItemType<T extends Block['type'] = Block['type']> = ListGroupHelperType<'_list_item', T>;
+import type { Block, ListGroupItemType, ListGroupType } from '~/contents/components/notion/block/types';
 
 // Keyed by every `_list_item` type in `Block['type']` (not `Partial`), so adding a new one to
 // `Block` forces a mapping to be added here too, instead of silently falling through as ungrouped.
@@ -17,6 +13,13 @@ const LIST_ITEM_GROUP_TYPE: ListItemGroupType = {
   numbered_list_item: 'numbered_list',
 };
 
+// `type in object` alone doesn't narrow `type`'s own union down to `object`'s keys, so a named
+// predicate is needed to actually get `keyof ListItemGroupType` back out of the check.
+const isListItemType = (type: Block['type']): type is keyof ListItemGroupType => type in LIST_ITEM_GROUP_TYPE;
+
+// `bulleted_list`'s and `numbered_list`'s `children` are each typed narrower than `Block[]` (only
+// their own item type), so their union can't accept an arbitrary `Block` via `.push()`. This
+// widened shape is only for mutating an already-confirmed group in place.
 interface ListGroup {
   type: ListGroupType;
   id: string;
@@ -29,20 +32,24 @@ interface ListGroup {
 // `<ul>`/`<ol>` instead of one per item.
 export const groupListItems = (input: Block[]): Block[] => {
   const grouped: Block[] = [];
-  let openGroup: ListGroup | undefined;
 
   for (const block of input) {
-    // `ListItemGroupType` only has keys for `_list_item` types, so widen the lookup back to
-    // `Block['type']` here — a non-matching key simply looks up as `undefined`, same as `Partial`.
-    const groupType = (LIST_ITEM_GROUP_TYPE as Partial<Record<Block['type'], ListGroupType>>)[block.type];
-
-    if (groupType && openGroup?.type === groupType) {
-      openGroup.children.push(block);
+    if (!isListItemType(block.type)) {
+      grouped.push(block);
       continue;
     }
 
-    openGroup = groupType ? { type: groupType, id: `${block.id}-group`, has_children: true, children: [block] } : undefined;
-    grouped.push((openGroup ?? block) as Block);
+    const groupType = LIST_ITEM_GROUP_TYPE[block.type];
+    const lastGroup = grouped.at(-1);
+
+    // `Block` is a large, recursively-typed union, so TypeScript can't narrow `lastGroup` to the
+    // group variant from this comparison alone — assert it once the check has confirmed it.
+    if (lastGroup?.type === groupType) {
+      (lastGroup as ListGroup).children.push(block);
+      continue;
+    }
+
+    grouped.push({ type: groupType, id: randomUUID(), has_children: true, children: [block] } as Block);
   }
 
   return grouped;
