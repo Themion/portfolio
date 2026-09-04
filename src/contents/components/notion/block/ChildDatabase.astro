@@ -1,0 +1,11 @@
+---
+import type { NotionBlockProps } from './types';
+
+type Props = NotionBlockProps<'child_database'>;
+
+const { block } = Astro.props;
+
+const href = `https://www.notion.so/${block.id.replaceAll('-', '')}`;
+---
+
+<a class="notion-block-child-database" href={href}>{block.child_database.title}</a>
