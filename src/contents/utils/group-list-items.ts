@@ -1,8 +1,18 @@
 import type { Block } from '~/contents/components/notion/block/types';
 
-type ListGroupType<T extends Block['type'] = Block['type']> = T extends `${infer U}_list_item` ? `${U}_list` : never;
+type ListGroupHelperType<Suffix extends string, T extends Block['type'] = Block['type']> =
+  T extends `${infer U}_list_item` ? `${U}${Suffix}` : never;
 
-const LIST_ITEM_GROUP_TYPE: Partial<Record<Block['type'], ListGroupType>> = {
+type ListGroupType<T extends Block['type'] = Block['type']> = ListGroupHelperType<'_list', T>;
+type ListGroupItemType<T extends Block['type'] = Block['type']> = ListGroupHelperType<'_list_item', T>;
+
+// Keyed by every `_list_item` type in `Block['type']` (not `Partial`), so adding a new one to
+// `Block` forces a mapping to be added here too, instead of silently falling through as ungrouped.
+type ListItemGroupType = {
+  [T in ListGroupItemType]: ListGroupType<T>;
+};
+
+const LIST_ITEM_GROUP_TYPE: ListItemGroupType = {
   bulleted_list_item: 'bulleted_list',
   numbered_list_item: 'numbered_list',
 };
@@ -22,7 +32,9 @@ export const groupListItems = (input: Block[]): Block[] => {
   let openGroup: ListGroup | undefined;
 
   for (const block of input) {
-    const groupType = LIST_ITEM_GROUP_TYPE[block.type];
+    // `ListItemGroupType` only has keys for `_list_item` types, so widen the lookup back to
+    // `Block['type']` here — a non-matching key simply looks up as `undefined`, same as `Partial`.
+    const groupType = (LIST_ITEM_GROUP_TYPE as Partial<Record<Block['type'], ListGroupType>>)[block.type];
 
     if (groupType && openGroup?.type === groupType) {
       openGroup.children.push(block);
