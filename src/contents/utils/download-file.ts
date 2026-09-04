@@ -36,7 +36,7 @@ const downloadFileUncached = async (url: string) => {
   const arrayBuffer = await response.arrayBuffer();
   await writeFile(filePath, Buffer.from(arrayBuffer));
 
-  return `/${FILES_DIR_NAME}/${fileName}`;
+  return `${import.meta.env.BASE_URL}/${FILES_DIR_NAME}/${fileName}`;
 };
 
 export const downloadFile = (url: string) => {
