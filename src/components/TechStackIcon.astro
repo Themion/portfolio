@@ -1,0 +1,30 @@
+---
+import type { Property } from "~/contents/components/notion";
+import { downloadFile } from "~/contents/utils/download-file";
+
+type Props = {
+  property: Extract<Property, { type: "files" }>;
+};
+
+const { property } = Astro.props;
+
+const imgProps = await Promise.all(
+  property.files.map(async (file): Promise<{ src: string; alt: string }> => {
+    const alt = file.name;
+    switch (file.type) {
+      case "external":
+        return { src: file.external.url, alt };
+      case "file":
+        return { src: await downloadFile(file.file.url), alt };
+    }
+  }),
+);
+---
+
+{
+  imgProps.map(({ src, alt }) => (
+    <div class="size-8 rounded object-contain p-1 shadow-sm">
+      <img src={src} alt={alt} class="size-full rounded object-contain" />
+    </div>
+  ))
+}
