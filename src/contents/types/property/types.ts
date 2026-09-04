@@ -13,5 +13,4 @@ export type NotionPropertyComponentMap = {
   [K in Property['type']]: AstroComponent<NotionPropertyProps<K>>;
 };
 
-// A property package doesn't need to ship a component for every Notion property type at once.
 export type NotionPropertyComponents = Partial<NotionPropertyComponentMap>;

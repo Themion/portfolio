@@ -15,5 +15,4 @@ export type NotionBlockComponentMap = {
   [K in Block["type"]]: AstroComponent<NotionBlockProps<K>>;
 };
 
-// A block package doesn't need to ship a component for every Notion block type at once.
 export type NotionBlockComponents = Partial<NotionBlockComponentMap>;
