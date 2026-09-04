@@ -1,6 +1,6 @@
 import type { Block } from '~/contents/components/notion/block/types';
 
-type ListGroupType = 'bulleted_list' | 'numbered_list';
+type ListGroupType<T extends Block['type'] = Block['type']> = T extends `${infer U}_list_item` ? `${U}_list` : never;
 
 const LIST_ITEM_GROUP_TYPE: Partial<Record<Block['type'], ListGroupType>> = {
   bulleted_list_item: 'bulleted_list',
