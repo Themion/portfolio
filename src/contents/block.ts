@@ -49,5 +49,5 @@ export const withChildren = (logger: AstroIntegrationLogger) => {
     // assumption that its integration never gets back permission-restricted partial blocks.
     return Object.assign(structuredClone(block), { children }) as WithChildren<T>;
   };
-  
 }
+  
