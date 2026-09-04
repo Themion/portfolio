@@ -1,6 +1,6 @@
 import type { AstroIntegrationLogger } from "astro";
 
-import type { Block } from "~/contents/components/notion";
+import type { Block } from "~/contents/components";
 
 import { getQueryClient, notionClient } from "./client";
 import { getCommonInfiniteQueryOptions } from "./common";

@@ -1,0 +1,15 @@
+---
+import type { NotionPropertyProps } from '~/contents/types/property';
+
+type Props = NotionPropertyProps<'email'>;
+
+const { property } = Astro.props;
+---
+
+{
+  property.email && (
+    <a class="notion-property-email" href={`mailto:${property.email}`}>
+      {property.email}
+    </a>
+  )
+}

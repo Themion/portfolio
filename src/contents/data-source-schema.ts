@@ -20,7 +20,7 @@ const generateEntryTypes = (properties: Record<string, PropertyConfig>) => {
     .join('\n');
 
   return `
-import type { Property } from '~/contents/components/notion';
+import type { Property } from '~/contents/components';
 import type { Page } from '~/contents';
 
 export type Entry = Omit<Page, 'properties'> & {

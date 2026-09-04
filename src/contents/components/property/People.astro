@@ -1,0 +1,18 @@
+---
+import type { NotionPropertyProps } from '~/contents/types/property';
+import User from './User.astro';
+
+type Props = NotionPropertyProps<'people'>;
+
+const { property } = Astro.props;
+---
+
+<ul class="notion-property-people">
+  {
+    property.people.map((user) => (
+      <li>
+        <User user={user} />
+      </li>
+    ))
+  }
+</ul>

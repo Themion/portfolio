@@ -1,0 +1,67 @@
+---
+import { downloadFile } from '~/contents/utils/download-file';
+
+import { RichText } from '../rich-text';
+import type { NotionBlockProps } from '~/contents/types/block';
+
+type Props = NotionBlockProps<'video'>;
+
+const { block } = Astro.props;
+
+// https://stackoverflow.com/questions/19377262/regex-for-youtube-url
+const youtubeRegex =
+  /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(?:-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|live\/|v\/)?)(?<youtubeId>[\w\-]+)(\S+)?$/;
+
+const getYoutubeUrl = (url: string) => {
+  const capturedGroups = youtubeRegex.exec(url)?.groups;
+  if (capturedGroups === undefined) return null;
+  return `https://www.youtube.com/embed/${capturedGroups['youtubeId']}`;
+};
+
+const hasCaption = block.video.caption.length > 0;
+const fileSrc = block.video.type === 'file' ? await downloadFile(block.video.file.url) : null;
+const youtubeUrl = block.video.type === 'external' ? getYoutubeUrl(block.video.external.url) : null;
+---
+
+{
+  fileSrc && (
+    <figure class="notion-block-figure">
+      {/* Notion video blocks carry no caption-track source. */}
+      {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+      <video class="notion-block-video" controls src={fileSrc} />
+      {hasCaption && (
+        <figcaption class="notion-block-figcaption">
+          <RichText richText={block.video.caption} />
+        </figcaption>
+      )}
+    </figure>
+  )
+}
+{
+  !fileSrc && youtubeUrl && (
+    <figure class="notion-block-figure">
+      <iframe
+        width="100%"
+        height="600"
+        src={youtubeUrl}
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      />
+      {hasCaption && (
+        <figcaption class="notion-block-figcaption">
+          <RichText richText={block.video.caption} />
+        </figcaption>
+      )}
+    </figure>
+  )
+}
+{
+  !fileSrc && !youtubeUrl && (
+    <p class="notion-block-unsupported">
+      External video ({block.video.type === 'external' ? block.video.external.url : ''}) is not supported yet: please
+      upload the video file directly or to YouTube.
+    </p>
+  )
+}

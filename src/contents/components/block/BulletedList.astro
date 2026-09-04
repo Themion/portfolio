@@ -1,0 +1,12 @@
+---
+import NotionBlocks from './NotionBlocks.astro';
+import type { NotionBlockProps } from '~/contents/types/block';
+
+type Props = NotionBlockProps<'bulleted_list'>;
+
+const { block, components } = Astro.props;
+---
+
+<ul>
+  <NotionBlocks blocks={block.children} components={components} />
+</ul>

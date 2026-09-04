@@ -1,11 +1,6 @@
 import { randomUUID } from 'node:crypto';
 
-import type {
-  ListGroupBlock,
-  ListGroupItemType,
-  ListGroupType,
-} from '~/contents/components/notion/block/list-group-block';
-import type { Block } from '~/contents/components/notion/block/types';
+import type { Block, ListGroupBlock, ListGroupItemType, ListGroupType } from '~/contents/types/block';
 
 // Keyed by every `_list_item` type in `Block['type']` (not `Partial`), so adding a new one to
 // `Block` forces a mapping to be added here too, instead of silently falling through as ungrouped.

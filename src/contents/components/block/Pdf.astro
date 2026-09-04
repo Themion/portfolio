@@ -1,0 +1,17 @@
+---
+import { downloadFile } from '~/contents/utils/download-file';
+
+import { RichText } from '../rich-text';
+import type { NotionBlockProps } from '~/contents/types/block';
+
+type Props = NotionBlockProps<'pdf'>;
+
+const { block } = Astro.props;
+
+const src = block.pdf.type === 'external' ? await downloadFile(block.pdf.external.url) : await downloadFile(block.pdf.file.url);
+const hasCaption = block.pdf.caption.length > 0;
+---
+
+<a class="notion-block-pdf" href={src} target="_blank" rel="noopener noreferrer">
+  {hasCaption ? <RichText richText={block.pdf.caption} /> : src}
+</a>

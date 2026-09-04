@@ -1,0 +1,32 @@
+---
+import type { Block, NotionBlockProps } from '~/contents/types/block';
+
+type Props = NotionBlockProps<'child_page'>;
+
+const { block } = Astro.props;
+
+// A `child_page`'s code-block children are treated as inline markup/style/script snippets
+// rather than rendered as visible code, letting a Notion child page carry custom CSS/JS.
+const codeBlocks = block.has_children
+  ? block.children.filter((child): child is Extract<Block, { type: 'code' }> => child.type === 'code')
+  : [];
+
+const snippets = codeBlocks
+  .map((codeBlock) => {
+    const code = codeBlock.code.rich_text.map((richText) => richText.plain_text).join('');
+    switch (codeBlock.code.language) {
+      case 'markdown':
+      case 'html':
+        return code;
+      case 'css':
+        return `<style>\n${code}\n</style>`;
+      case 'javascript':
+        return `<script>\n${code}\n</script>`;
+      default:
+        return null;
+    }
+  })
+  .filter((snippet) => snippet !== null);
+---
+
+{snippets.length > 0 && <Fragment set:html={snippets.join('\n')} />}

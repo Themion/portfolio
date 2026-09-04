@@ -1,0 +1,105 @@
+---
+import { groupListItems } from "~/contents/utils/group-list-items";
+import type { AstroComponent } from "~/types";
+
+import Audio from "./Audio.astro";
+import Bookmark from "./Bookmark.astro";
+import BulletedList from "./BulletedList.astro";
+import BulletedListItem from "./BulletedListItem.astro";
+import Callout from "./Callout.astro";
+import ChildDatabase from "./ChildDatabase.astro";
+import ChildPage from "./ChildPage.astro";
+import Code from "./Code.astro";
+import Column from "./Column.astro";
+import ColumnList from "./ColumnList.astro";
+import Divider from "./Divider.astro";
+import Embed from "./Embed.astro";
+import Equation from "./Equation.astro";
+import File from "./File.astro";
+import Heading from "./Heading.astro";
+import Image from "./Image.astro";
+import LinkPreview from "./LinkPreview.astro";
+import LinkToPage from "./LinkToPage.astro";
+import NumberedList from "./NumberedList.astro";
+import NumberedListItem from "./NumberedListItem.astro";
+import Paragraph from "./Paragraph.astro";
+import Pdf from "./Pdf.astro";
+import Quote from "./Quote.astro";
+import SyncedBlock from "./SyncedBlock.astro";
+import Tab from "./Tab.astro";
+import Table from "./Table.astro";
+import ToDo from "./ToDo.astro";
+import Toggle from "./Toggle.astro";
+import type { Block, NotionBlockComponents, NotionBlockProps } from "~/contents/types/block";
+import UnsupportedBlock from "./UnsupportedBlock.astro";
+import Video from "./Video.astro";
+
+// Left unmapped — the `UnsupportedBlock` fallback handles these deliberately:
+// - `breadcrumb`, `table_of_contents`: their content is derived from the page's ancestry/heading
+//   structure, which isn't available to a single block component.
+// - `template`: a Notion-editor-only "template button", with no meaningful static content.
+// - `meeting_notes`, `transcription`: AI-generated content blocks without a documented simple shape.
+// - `table_row`: only meaningful nested inside a `table`, which renders its rows itself.
+// - `unsupported`: Notion's own "we don't support this block" marker — the fallback message is
+//   already the correct thing to show.
+const defaultBlockComponents = {
+  audio: Audio,
+  bookmark: Bookmark,
+  bulleted_list: BulletedList,
+  bulleted_list_item: BulletedListItem,
+  callout: Callout,
+  child_database: ChildDatabase,
+  child_page: ChildPage,
+  code: Code,
+  column: Column,
+  column_list: ColumnList,
+  divider: Divider,
+  embed: Embed,
+  equation: Equation,
+  file: File,
+  // `Heading` handles all four heading types itself, so its declared props are their union — wider
+  // than any single slot here needs, which is exactly what makes it safe to narrow per slot.
+  heading_1: Heading as AstroComponent<NotionBlockProps<'heading_1'>>,
+  heading_2: Heading as AstroComponent<NotionBlockProps<'heading_2'>>,
+  heading_3: Heading as AstroComponent<NotionBlockProps<'heading_3'>>,
+  heading_4: Heading as AstroComponent<NotionBlockProps<'heading_4'>>,
+  image: Image,
+  link_preview: LinkPreview,
+  link_to_page: LinkToPage,
+  numbered_list: NumberedList,
+  numbered_list_item: NumberedListItem,
+  paragraph: Paragraph,
+  pdf: Pdf,
+  quote: Quote,
+  synced_block: SyncedBlock,
+  tab: Tab,
+  table: Table,
+  to_do: ToDo,
+  toggle: Toggle,
+  video: Video,
+} satisfies NotionBlockComponents;
+
+interface Props {
+  blocks: Block[];
+  components?: NotionBlockComponents;
+}
+
+const { blocks, components = {} } = Astro.props;
+
+const resolvedComponents = {
+  ...defaultBlockComponents,
+  ...components,
+};
+
+// Which component this is depends on `block.type`, resolved only at runtime, so its exact
+// (narrower) prop type can't be proven here — this is the one place that has to trust it.
+const resolveComponent = (block: Block) =>
+  (resolvedComponents[block.type] ?? UnsupportedBlock) as AstroComponent<NotionBlockProps>;
+---
+
+{
+  groupListItems(blocks).map((block) => {
+    const Component = resolveComponent(block);
+    return <Component block={block} components={components} />;
+  })
+}

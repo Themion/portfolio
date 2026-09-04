@@ -1,0 +1,9 @@
+---
+import type { NotionPropertyProps } from '~/contents/types/property';
+
+type Props = NotionPropertyProps<'number'>;
+
+const { property } = Astro.props;
+---
+
+{property.number !== null && <span class="notion-property-number">{property.number}</span>}

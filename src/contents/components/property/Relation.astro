@@ -1,0 +1,19 @@
+---
+import type { NotionPropertyProps } from '~/contents/types/property';
+
+type Props = NotionPropertyProps<'relation'>;
+
+const { property } = Astro.props;
+---
+
+<ul class="notion-property-relation">
+  {
+    // Only the referenced page's id is available here (its title would need a separate fetch),
+    // so link straight to the Notion page by id rather than rendering a resolved title.
+    property.relation.map((item) => (
+      <li>
+        <a href={`https://www.notion.so/${item.id.replaceAll('-', '')}`}>{item.id}</a>
+      </li>
+    ))
+  }
+</ul>
