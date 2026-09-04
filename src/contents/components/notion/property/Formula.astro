@@ -1,0 +1,14 @@
+---
+import TimeRange from '../rich-text/TimeRange.astro';
+import type { NotionPropertyProps } from './types';
+
+type Props = NotionPropertyProps<'formula'>;
+
+const { property } = Astro.props;
+const { formula } = property;
+---
+
+{formula.type === 'boolean' && formula.boolean !== null && <input type="checkbox" checked={formula.boolean} disabled />}
+{formula.type === 'number' && formula.number !== null && <span class="notion-property-formula">{formula.number}</span>}
+{formula.type === 'string' && formula.string !== null && <span class="notion-property-formula">{formula.string}</span>}
+{formula.type === 'date' && formula.date !== null && <TimeRange start={formula.date.start} end={formula.date.end} />}

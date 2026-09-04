@@ -1,6 +1,9 @@
 # build output
 dist/
 
+# files downloaded from Notion at build/dev time (see src/contents/utils/download-file.ts)
+public/files/
+
 # generated types
 .astro/
 

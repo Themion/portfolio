@@ -1,0 +1,14 @@
+---
+import type { NotionPropertyComponents, Property } from './types';
+
+interface Props {
+  property: Property;
+  components: NotionPropertyComponents;
+}
+
+const { property } = Astro.props;
+---
+
+<span class="notion-property-unsupported" data-notion-property-type={property.type}>
+  Unsupported Notion property: {property.type}
+</span>

@@ -1,0 +1,14 @@
+---
+interface Props {
+  expression: string;
+}
+
+const { expression } = Astro.props;
+
+const content = expression.replaceAll('\n', '');
+const src = `http://www.sciweavers.org/tex2img.php?eq=${encodeURIComponent(
+  content,
+)}&bc=White&fc=Black&im=jpg&fs=20&ff=arev&edit=`;
+---
+
+<img loading="lazy" src={src} alt={content} />

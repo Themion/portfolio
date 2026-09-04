@@ -1,0 +1,19 @@
+---
+import { RichText } from '../rich-text';
+import NotionBlocks from './NotionBlocks.astro';
+import type { NotionBlockProps } from './types';
+
+type Props = NotionBlockProps<'to_do'>;
+
+const { block, components } = Astro.props;
+---
+
+<div class="notion-block-todo">
+  <label>
+    <input type="checkbox" checked={block.to_do.checked} disabled />
+    <span>
+      <RichText richText={block.to_do.rich_text} />
+    </span>
+  </label>
+  {block.has_children && <NotionBlocks blocks={block.children} components={components} />}
+</div>

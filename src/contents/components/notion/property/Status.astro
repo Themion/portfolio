@@ -1,0 +1,15 @@
+---
+import type { NotionPropertyProps } from './types';
+
+type Props = NotionPropertyProps<'status'>;
+
+const { property } = Astro.props;
+---
+
+{
+  property.status && (
+    <span class="notion-property-status" data-notion-color={property.status.color}>
+      {property.status.name}
+    </span>
+  )
+}

@@ -1,0 +1,29 @@
+---
+import { RichText } from '../rich-text';
+import type { NotionBlockProps } from './types';
+
+type Props = NotionBlockProps<'heading_1' | 'heading_2' | 'heading_3' | 'heading_4'>;
+
+const { block } = Astro.props;
+
+// `block[block.type]` isn't type-safe across a discriminated union without narrowing first.
+const heading = (() => {
+  switch (block.type) {
+    case 'heading_1':
+      return block.heading_1;
+    case 'heading_2':
+      return block.heading_2;
+    case 'heading_3':
+      return block.heading_3;
+    case 'heading_4':
+      return block.heading_4;
+  }
+})();
+
+const level = block.type.split('_')[1];
+const Tag = `h${level}` as 'h1' | 'h2' | 'h3' | 'h4';
+---
+
+<Tag class={`notion-block-heading-${level}`} data-notion-color={heading.color !== 'default' ? heading.color : undefined}>
+  {heading.rich_text.length > 0 ? <RichText richText={heading.rich_text} /> : <br />}
+</Tag>

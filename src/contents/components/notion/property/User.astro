@@ -1,0 +1,18 @@
+---
+import type { GroupObjectResponse, PartialUserObjectResponse, UserObjectResponse } from '@notionhq/client';
+
+interface Props {
+  user: PartialUserObjectResponse | UserObjectResponse | GroupObjectResponse;
+}
+
+const { user } = Astro.props;
+
+// A user/group value can arrive partial (id only) when Notion doesn't expand it.
+const name = 'name' in user ? (user.name ?? 'Unknown user') : 'Unknown user';
+const avatarUrl = 'avatar_url' in user ? user.avatar_url : null;
+---
+
+<span class="notion-property-user">
+  {avatarUrl && <img class="notion-property-user-avatar" src={avatarUrl} alt="" loading="lazy" />}
+  {name}
+</span>

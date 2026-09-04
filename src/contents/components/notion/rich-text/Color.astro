@@ -1,0 +1,11 @@
+---
+import type { RichTextItemResponse } from '@notionhq/client';
+
+interface Props {
+  color: RichTextItemResponse['annotations']['color'];
+}
+
+const { color } = Astro.props;
+---
+
+<span data-notion-color={color}><slot /></span>

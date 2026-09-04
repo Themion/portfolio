@@ -1,0 +1,16 @@
+---
+import type { NotionPropertyProps } from './types';
+
+type Props = NotionPropertyProps<'place'>;
+
+const { property } = Astro.props;
+const { place } = property;
+---
+
+{
+  place && (
+    <a class="notion-property-place" href={`https://www.google.com/maps?q=${place.lat},${place.lon}`}>
+      {place.name ?? place.address ?? `${place.lat}, ${place.lon}`}
+    </a>
+  )
+}

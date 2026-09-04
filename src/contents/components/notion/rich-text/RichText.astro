@@ -1,0 +1,13 @@
+---
+import type { RichTextItemResponse } from '@notionhq/client';
+
+import TextRun from './TextRun.astro';
+
+interface Props {
+  richText: RichTextItemResponse[];
+}
+
+const { richText } = Astro.props;
+---
+
+{richText.map((item) => <TextRun item={item} />)}

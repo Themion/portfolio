@@ -1,16 +1,19 @@
-import type { ListBlockChildrenResponse } from "@notionhq/client";
 import type { AstroIntegrationLogger } from "astro";
+
+import type { Block } from "~/contents/components/notion";
 
 import { getQueryClient, notionClient } from "./client";
 import { getCommonInfiniteQueryOptions } from "./common";
 
-interface Block {
+// Loose on purpose: `withChildren` runs on both page and block objects, which only share `id`
+// and an optional `has_children`. The recursively-typed `children` it attaches is a real `Block[]`.
+interface Identifiable {
   id: string;
   has_children?: boolean;
 }
 
 type WithChildren<T> = T & {
-  children: ListBlockChildrenResponse['results'];
+  children: Block[];
 }
 
 export const getBlockQueryKey = (block_id: string) => ['block-children', block_id];
@@ -34,15 +37,17 @@ export const getBlockQuery = (logger: AstroIntegrationLogger) => {
 export const withChildren = (logger: AstroIntegrationLogger) => {
   const getChildrenByBlockId = getBlockQuery(logger);
 
-  return async <T extends Block>(block: T): Promise<WithChildren<T>> => {
+  return async <T extends Identifiable>(block: T): Promise<WithChildren<T>> => {
     if (block.has_children === false) {
       return Object.assign(structuredClone(block), { children: [] });
     }
-  
+
     const rawChildren = await getChildrenByBlockId(block.id);
     const children = await Promise.all(rawChildren.map((withChildren(logger))));
-  
-    return Object.assign(structuredClone(block), { children })
+
+    // `Block` excludes the partial (no `.type`) block variant, matching this app's standing
+    // assumption that its integration never gets back permission-restricted partial blocks.
+    return Object.assign(structuredClone(block), { children }) as WithChildren<T>;
   };
-  
 }
+  

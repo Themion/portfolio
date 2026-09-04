@@ -1,0 +1,26 @@
+---
+import { downloadFile } from "~/contents/utils/download-file";
+
+import { RichText } from "../rich-text";
+import type { NotionBlockProps } from "./types";
+
+type Props = NotionBlockProps<"file">;
+
+const { block } = Astro.props;
+
+const src =
+  block.file.type === "external"
+    ? block.file.external.url
+    : await downloadFile(block.file.file.url);
+const hasCaption = block.file.caption.length > 0;
+---
+
+<a
+  class="notion-block-file"
+  href={src}
+  target="_blank"
+  rel="noopener noreferrer"
+  download={block.file.name}
+>
+  {hasCaption ? <RichText richText={block.file.caption} /> : block.file.name}
+</a>
