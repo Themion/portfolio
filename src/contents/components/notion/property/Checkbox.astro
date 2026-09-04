@@ -1,9 +1,0 @@
----
-import type { NotionPropertyProps } from './types';
-
-type Props = NotionPropertyProps<'checkbox'>;
-
-const { property } = Astro.props;
----
-
-<input type="checkbox" checked={property.checkbox} disabled />

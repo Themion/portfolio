@@ -1,0 +1,10 @@
+---
+import Equation from '../rich-text/Equation.astro';
+import type { NotionBlockProps } from '~/contents/types';
+
+type Props = NotionBlockProps<'equation'>;
+
+const { block } = Astro.props;
+---
+
+<Equation expression={block.equation.expression} />

@@ -1,0 +1,18 @@
+---
+import { RichText } from '../rich-text';
+import NotionBlocks from './NotionBlocks.astro';
+import type { NotionBlockProps } from '~/contents/types';
+
+type Props = NotionBlockProps<'quote'>;
+
+const { block, components } = Astro.props;
+
+const color = block.quote.color;
+---
+
+<blockquote data-notion-color={color !== 'default' ? color : undefined}>
+  <span>
+    <RichText richText={block.quote.rich_text} />
+  </span>
+  {block.has_children && <NotionBlocks blocks={block.children} components={components} />}
+</blockquote>

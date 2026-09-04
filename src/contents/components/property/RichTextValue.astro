@@ -1,0 +1,10 @@
+---
+import { RichText } from "../rich-text";
+import type { NotionPropertyProps } from "~/contents/types";
+
+type Props = NotionPropertyProps<"rich_text">;
+
+const { property } = Astro.props;
+---
+
+<RichText richText={property.rich_text} />

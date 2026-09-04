@@ -1,0 +1,11 @@
+---
+import type { NotionBlockProps } from '~/contents/types';
+
+type Props = NotionBlockProps<'code'>;
+
+const { block } = Astro.props;
+
+const code = block.code.rich_text.map((richText) => richText.plain_text).join('');
+---
+
+<pre class="notion-block-code" data-language={block.code.language}><code>{code}</code></pre>

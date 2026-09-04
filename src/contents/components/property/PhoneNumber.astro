@@ -1,0 +1,15 @@
+---
+import type { NotionPropertyProps } from '~/contents/types';
+
+type Props = NotionPropertyProps<'phone_number'>;
+
+const { property } = Astro.props;
+---
+
+{
+  property.phone_number && (
+    <a class="notion-property-phone-number" href={`tel:${property.phone_number}`}>
+      {property.phone_number}
+    </a>
+  )
+}

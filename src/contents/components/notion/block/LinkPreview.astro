@@ -1,9 +1,0 @@
----
-import type { NotionBlockProps } from './types';
-
-type Props = NotionBlockProps<'link_preview'>;
-
-const { block } = Astro.props;
----
-
-<a class="notion-block-link-preview" href={block.link_preview.url}>{block.link_preview.url}</a>

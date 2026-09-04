@@ -1,7 +1,7 @@
 import type { PageObjectResponse } from "@notionhq/client";
 import type { AstroIntegrationLogger } from "astro";
 
-import type { Block } from "~/contents/components/notion";
+import type { Block } from "~/contents/components";
 
 import { withChildren } from "./block";
 import { getQueryClient, notionClient } from "./client";

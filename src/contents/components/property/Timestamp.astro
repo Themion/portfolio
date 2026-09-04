@@ -1,0 +1,11 @@
+---
+import type { NotionPropertyProps } from '~/contents/types';
+
+type Props = NotionPropertyProps<'created_time' | 'last_edited_time'>;
+
+const { property } = Astro.props;
+
+const value = property.type === 'created_time' ? property.created_time : property.last_edited_time;
+---
+
+<time datetime={value}>{value}</time>

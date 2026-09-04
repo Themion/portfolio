@@ -1,0 +1,14 @@
+---
+import { RichText } from '../rich-text';
+import type { NotionBlockProps } from '~/contents/types';
+
+type Props = NotionBlockProps<'paragraph'>;
+
+const { block } = Astro.props;
+
+const color = block.paragraph.color;
+---
+
+<p class="notion-block-paragraph" data-notion-color={color !== 'default' ? color : undefined}>
+  {block.paragraph.rich_text.length > 0 ? <RichText richText={block.paragraph.rich_text} /> : <br />}
+</p>

@@ -1,0 +1,15 @@
+---
+import type { NotionBlockProps } from '~/contents/types';
+
+type Props = NotionBlockProps<'link_to_page'>;
+
+const { block } = Astro.props;
+
+// We only have the referenced id, not its title (that would need a separate fetch), so link
+// straight to the Notion page/database/comment by id rather than rendering a resolved preview.
+const target = block.link_to_page;
+const id = target.type === 'page_id' ? target.page_id : target.type === 'database_id' ? target.database_id : target.comment_id;
+const href = `https://www.notion.so/${id.replaceAll('-', '')}`;
+---
+
+<a class="notion-block-link-to-page" href={href}>{href}</a>

@@ -1,0 +1,12 @@
+---
+import NotionBlocks from './NotionBlocks.astro';
+import type { NotionBlockProps } from '~/contents/types';
+
+type Props = NotionBlockProps<'numbered_list'>;
+
+const { block, components } = Astro.props;
+---
+
+<ol>
+  <NotionBlocks blocks={block.children} components={components} />
+</ol>
