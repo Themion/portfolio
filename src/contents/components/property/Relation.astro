@@ -8,8 +8,7 @@ const { property } = Astro.props;
 
 <ul class="notion-property-relation">
   {
-    // Only the referenced page's id is available here (its title would need a separate fetch),
-    // so link straight to the Notion page by id rather than rendering a resolved title.
+    // No title without a separate fetch, so link by id instead of a resolved title.
     property.relation.map((item) => (
       <li>
         <a href={`https://www.notion.so/${item.id.replaceAll('-', '')}`}>{item.id}</a>

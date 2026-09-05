@@ -7,7 +7,6 @@ import { withChildren } from "./block";
 import { getQueryClient, notionClient } from "./client";
 import { getCommonInfiniteQueryOptions } from "./common";
 
-// What `getDataSource` actually resolves to: a Notion page plus its recursively-fetched blocks.
 export type Page = PageObjectResponse & { children: Block[] };
 
 export const getDataSourceQueryKey = (dataSourceId: string) => ['data-source', dataSourceId];

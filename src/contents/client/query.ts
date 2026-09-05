@@ -34,11 +34,8 @@ const getNotionRetryDelayMs = (error: NotionClientError): number | null => {
 
 let queryClient: QueryClient | null = null;
 
-// Lazily created once and shared by every collection loader (company, tech-stack, ...), so they
-// all funnel through the same retry/backoff state instead of each spinning up their own client.
-// The logger of whichever loader runs first "wins" the underlying client, so it's re-forked under
-// a neutral 'notion' label rather than that collection's own label. Loaders run concurrently via
-// `Promise.all`, but since this is synchronous with no `await`, there's no race on `queryClient`.
+// Shared once across all loaders (forked under a neutral 'notion' label, not the first caller's) —
+// safe because creation is synchronous, so concurrent `Promise.all` callers can't race it.
 export const getQueryClient = (logger: AstroIntegrationLogger): QueryClient => {
   if (queryClient) return queryClient;
 

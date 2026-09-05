@@ -29,8 +29,7 @@ import Verification from "./Verification.astro";
 // `UnsupportedProperty` fallback's message is already the correct thing to show for it.
 const defaultPropertyComponents = {
   checkbox: Checkbox,
-  // `UserProperty`/`Timestamp` each handle both of their slots themselves, so their declared props
-  // are a union of the two — wider than either single slot needs, which is what makes narrowing safe.
+  // UserProperty/Timestamp handle both their slots, so narrowing per slot here is safe.
   created_by: UserProperty as AstroComponent<NotionPropertyProps<'created_by'>>,
   created_time: Timestamp as AstroComponent<NotionPropertyProps<'created_time'>>,
   date: DateValue,
@@ -67,8 +66,7 @@ const resolvedComponents = {
   ...components,
 };
 
-// Which component this is depends on `property.type`, resolved only at runtime, so its exact
-// (narrower) prop type can't be proven here — this is the one place that has to trust it.
+// property.type is only known at runtime, so its exact prop type can't be proven here — trust it.
 const Component = (resolvedComponents[property.type] ??
   UnsupportedProperty) as AstroComponent<NotionPropertyProps>;
 ---

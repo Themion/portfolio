@@ -6,13 +6,9 @@ import type { Page } from "./data-source";
 
 type PropertyConfig = DataSourceObjectResponse['properties'][string];
 
-// A page's `properties` type (`Property`, from `@notionhq/client`) is a flat union over every
-// possible Notion property type — since that type has no idea which property *name* maps to which
-// property *type* for a given database, every property read out of `page.data.properties[name]`
-// widens to that whole union instead of narrowing to what it actually is. The data source's
-// *schema* does carry that name → type mapping, so this fetches it (once per id, cached below) and
-// turns it into real per-property TypeScript source for Astro's content-layer `createSchema()`
-// hook, which splices a loader's own generated type declarations into the collection's entry type:
+// `Property` is a flat union with no name→type mapping, so `page.properties[name]` always widens
+// to the whole union. The data source schema has that mapping, so this generates real per-property
+// types for Astro's `createSchema()` hook to splice in:
 // https://docs.astro.build/en/reference/content-loader-reference/#createschema
 const generateEntryTypes = (properties: Record<string, PropertyConfig>) => {
   const propertyFields = Object.entries(properties)
@@ -39,8 +35,7 @@ const fetchDataSourceSchema = async (dataSourceId: string) => {
   }
 
   return {
-    // The loader already hands `parseData` an already-typed `Page`, so there's no meaningful
-    // runtime validation to add — `types` (below) is what actually narrows the static type.
+    // No real runtime validation needed — `types` below is what narrows statically.
     schema: z.custom<Page>(),
     types: generateEntryTypes(dataSource.properties),
   };
