@@ -15,6 +15,6 @@ const Item = (components.numbered_list_item ?? NumberedListItem) as AstroCompone
 >;
 ---
 
-<ol>
+<ol class="list-decimal list-inside">
   {block.children.map((item) => <Item block={item} components={components} />)}
 </ol>
