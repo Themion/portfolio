@@ -63,8 +63,7 @@ const techStacks = await getCollection("techStack");
     if (!(dialog instanceof HTMLDialogElement)) continue;
 
     trigger.addEventListener('click', () => dialog.showModal());
-    // `<dialog>` has no built-in "click outside to close" — a click that lands on the
-    // dialog element itself (not something inside it) means it hit the backdrop area.
+    // `<dialog>` has no built-in backdrop-close — a click landing on the dialog itself hit the backdrop.
     dialog.addEventListener('click', (event) => {
       if (event.target === dialog) dialog.close();
     });
