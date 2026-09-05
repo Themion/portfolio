@@ -17,8 +17,8 @@ const dialogId = `skill-modal-${page.id}`;
 <button
   type="button"
   class="flex flex-row items-center gap-2 rounded border border-neutral-200 p-2"
-  data-skill-trigger={dialogId}
   aria-haspopup="dialog"
+  data-skill-trigger={dialogId}
 >
   <TechStackIcon property={properties["아이콘"]} />
   <NotionProperty property={properties["기술명"]} />
@@ -39,13 +39,11 @@ const dialogId = `skill-modal-${page.id}`;
   </div>
 </dialog>
 
-<script>
-  // Astro dedupes this script to a single instance regardless of how many `TechStackCard`s
-  // render, so this runs once and wires up every trigger/dialog pair found on the page.
-  for (const trigger of document.querySelectorAll<HTMLButtonElement>('[data-skill-trigger]')) {
-    const dialog = document.getElementById(trigger.dataset.skillTrigger ?? '');
-    if (!(dialog instanceof HTMLDialogElement)) continue;
+<script define:vars={{ dialogId }}>
+  const trigger = document.querySelector(`[data-skill-trigger="${dialogId}"]`);
+  const dialog = document.getElementById(dialogId);
 
+  if (trigger instanceof HTMLButtonElement && dialog instanceof HTMLDialogElement) {
     trigger.addEventListener('click', () => dialog.showModal());
     // `<dialog>` has no built-in backdrop-close — a click landing on the dialog itself hit the backdrop.
     dialog.addEventListener('click', (event) => {
