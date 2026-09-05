@@ -34,9 +34,12 @@ import type { Block, NotionBlockComponents, NotionBlockProps } from "~/contents/
 import UnsupportedBlock from "./UnsupportedBlock.astro";
 import Video from "./Video.astro";
 
-// Deliberately unmapped (UnsupportedBlock's fallback is correct for these): breadcrumb/
-// table_of_contents (need page context), template (editor-only), meeting_notes/transcription (no
-// fixed shape), table_row (only valid inside table), unsupported (Notion's own marker).
+// Deliberately unmapped — UnsupportedBlock's fallback is correct for these:
+// - `breadcrumb`, `table_of_contents`: need page context, not just this block.
+// - `template`: editor-only, no static content.
+// - `meeting_notes`, `transcription`: no fixed shape.
+// - `table_row`: only valid nested inside a `table`.
+// - `unsupported`: Notion's own marker.
 const defaultBlockComponents = {
   audio: Audio,
   bookmark: Bookmark,
