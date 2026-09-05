@@ -8,6 +8,10 @@ import eslintPluginSimpleImportSort from 'eslint-plugin-simple-import-sort';
 import tseslint from 'typescript-eslint';
 
 export default defineConfig([
+  {
+    ignores: ['node_modules/**', 'dist/**', '.astro/**', 'public/files/**'],
+  },
+
   // Registers the @typescript-eslint plugin/rules (also used for .astro frontmatter, see below)
   ...tseslint.configs.recommended,
 
