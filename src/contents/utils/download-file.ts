@@ -3,7 +3,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { extname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { publicDir } from 'astro:config/server';
+import { outDir, publicDir } from 'astro:config/server';
 
 // Downloaded files land in their own subdirectory of `publicDir`/`outDir`, rather than loose at
 // the root, so it's a single, stable path (`public/files/`) to gitignore instead of one entry
@@ -20,10 +20,13 @@ const downloadFileUncached = async (url: string) => {
   // is (browsers and OSes both lean on it, since there's no Content-Type to infer from on disk).
   const extension = extname(new URL(url).pathname);
   const fileName = `${randomUUID()}${extension}`;
-  // `publicDir` (not `outDir`, the *build output* directory the dev server can't serve at all)
-  // is what Astro serves at the site root, identically in dev and after `astro build` copies it
-  // into `outDir` — so the caller needs the site-relative URL back, not this filesystem path.
-  const filesDirPath = resolve(fileURLToPath(publicDir), FILES_DIR_NAME);
+  // Callers of `downloadFile` render as part of `astro build`'s static route generation, which
+  // runs after `astro build` already copied `publicDir` into `outDir` — writing to `publicDir`
+  // during a build produces files that never make it into the shipped output. `outDir` doesn't
+  // exist in dev (no build has run), so use `publicDir` there instead, which the dev server
+  // serves directly. Either way the caller gets back the site-relative URL, not this path.
+  const targetDir = import.meta.env.DEV ? publicDir : outDir;
+  const filesDirPath = resolve(fileURLToPath(targetDir), FILES_DIR_NAME);
   const filePath = resolve(filesDirPath, fileName);
 
   await mkdir(filesDirPath, { recursive: true });
