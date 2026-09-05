@@ -24,18 +24,20 @@ const dialogId = `skill-modal-${page.id}`;
   <NotionProperty property={properties["기술명"]} />
 </button>
 
-<dialog id={dialogId} class="max-w-md rounded p-6 backdrop:bg-black/50">
-  <form method="dialog" class="float-right">
-    <button type="submit" autofocus aria-label="닫기" class="rounded px-2 py-1 text-neutral-500 hover:bg-neutral-100">
-      ✕
-    </button>
-  </form>
-  <div class="flex flex-row items-center gap-2">
-    <TechStackIcon property={properties["아이콘"]} />
-    <NotionProperty property={properties["기술명"]} />
-  </div>
-  <div class="mt-4">
-    <NotionBlocks blocks={page.data.children} />
+<dialog id={dialogId} class="m-auto max-w-md rounded backdrop:bg-black/50">
+  <div class="p-6">
+    <form method="dialog" class="float-right">
+      <button type="submit" autofocus aria-label="닫기" class="rounded px-2 py-1 text-neutral-500 hover:bg-neutral-100">
+        ✕
+      </button>
+    </form>
+    <div class="flex flex-row items-center gap-2">
+      <TechStackIcon property={properties["아이콘"]} />
+      <NotionProperty property={properties["기술명"]} />
+    </div>
+    <div class="mt-4">
+      <NotionBlocks blocks={page.data.children} />
+    </div>
   </div>
 </dialog>
 
