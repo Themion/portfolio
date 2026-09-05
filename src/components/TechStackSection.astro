@@ -1,0 +1,14 @@
+---
+import { getCollection } from "astro:content";
+
+import TechStackCard from "./TechStackCard.astro";
+
+const techStacks = await getCollection("techStack");
+---
+
+<section>
+  <h2>Tech Stacks</h2>
+  <div class="flex flex-row flex-wrap gap-4">
+    {techStacks.map((page) => <TechStackCard page={page} />)}
+  </div>
+</section>
