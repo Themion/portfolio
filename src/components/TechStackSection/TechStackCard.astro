@@ -24,16 +24,21 @@ const dialogId = `skill-modal-${page.id}`;
   <NotionProperty property={properties["기술명"]} />
 </button>
 
-<dialog id={dialogId} class="m-auto max-w-md rounded backdrop:bg-black/50">
+<dialog id={dialogId} class="m-auto max-w-md rounded-xl backdrop:bg-black/50">
   <div class="p-6">
-    <form method="dialog" class="float-right">
-      <button type="submit" autofocus aria-label="닫기" class="rounded px-2 py-1 text-neutral-500 hover:bg-neutral-100">
-        ✕
-      </button>
-    </form>
     <div class="flex flex-row items-center gap-2">
       <TechStackIcon property={properties["아이콘"]} />
       <NotionProperty property={properties["기술명"]} />
+      <form method="dialog" class="ml-auto">
+        <button
+          type="submit"
+          autofocus
+          aria-label="닫기"
+          class="rounded-full bg-neutral-200 px-2 py-1 text-sm text-neutral-500 hover:bg-neutral-100"
+        >
+          ✕
+        </button>
+      </form>
     </div>
     <div class="mt-4">
       <NotionBlocks blocks={page.data.children} />
@@ -46,9 +51,9 @@ const dialogId = `skill-modal-${page.id}`;
   const dialog = document.getElementById(dialogId);
 
   if (trigger instanceof HTMLButtonElement && dialog instanceof HTMLDialogElement) {
-    trigger.addEventListener('click', () => dialog.showModal());
+    trigger.addEventListener("click", () => dialog.showModal());
     // `<dialog>` has no built-in backdrop-close — a click landing on the dialog itself hit the backdrop.
-    dialog.addEventListener('click', (event) => {
+    dialog.addEventListener("click", (event) => {
       if (event.target === dialog) dialog.close();
     });
   }
