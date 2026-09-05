@@ -20,13 +20,11 @@ interface Wrapper {
 
 interface Props {
   item: RichTextItemResponse;
-  // Annotation wrappers still to peel off, outermost first. Defaults to the full list for `item`
-  // on the initial call; each recursive call passes the tail, one layer closer to the base content.
+  // Wrappers left to peel off, outermost first — recursive calls pass the tail.
   wrappers?: Wrapper[];
 }
 
-// Outermost wrapper first — the reverse of application order, since each later annotation wraps
-// around everything applied before it (color ends up outermost, link/code stay closest to the text).
+// Order matters: later pushes end up outermost (color outermost, link/code innermost).
 const getWrappers = (item: RichTextItemResponse): Wrapper[] => {
   const { annotations } = item;
   const wrappers: Wrapper[] = [];

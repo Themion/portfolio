@@ -29,9 +29,8 @@ export const groupListItems = (input: Block[]): Block[] => {
     const groupType = LIST_ITEM_GROUP_TYPE[block.type];
     const lastGroup = grouped.at(-1);
 
-    // `Block` is a large, recursively-typed union, so TypeScript can't narrow `lastGroup` to the
-    // group variant from this comparison alone — assert it once the check has confirmed it. `block`
-    // is asserted too: `isListItemType` narrowed `block.type`, not `block` itself.
+    // `Block`'s union is too large/recursive for TS to narrow `lastGroup` here, and
+    // `isListItemType` only narrowed `block.type`, not `block` — so both are asserted.
     if (lastGroup?.type === groupType) {
       (lastGroup as ListGroupBlock<ListGroupItemType>).children.push(
         block as Extract<Block, { type: ListGroupItemType }>,

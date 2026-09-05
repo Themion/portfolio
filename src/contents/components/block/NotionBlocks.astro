@@ -34,14 +34,9 @@ import type { Block, NotionBlockComponents, NotionBlockProps } from "~/contents/
 import UnsupportedBlock from "./UnsupportedBlock.astro";
 import Video from "./Video.astro";
 
-// Left unmapped — the `UnsupportedBlock` fallback handles these deliberately:
-// - `breadcrumb`, `table_of_contents`: their content is derived from the page's ancestry/heading
-//   structure, which isn't available to a single block component.
-// - `template`: a Notion-editor-only "template button", with no meaningful static content.
-// - `meeting_notes`, `transcription`: AI-generated content blocks without a documented simple shape.
-// - `table_row`: only meaningful nested inside a `table`, which renders its rows itself.
-// - `unsupported`: Notion's own "we don't support this block" marker — the fallback message is
-//   already the correct thing to show.
+// Deliberately unmapped (UnsupportedBlock's fallback is correct for these): breadcrumb/
+// table_of_contents (need page context), template (editor-only), meeting_notes/transcription (no
+// fixed shape), table_row (only valid inside table), unsupported (Notion's own marker).
 const defaultBlockComponents = {
   audio: Audio,
   bookmark: Bookmark,
@@ -57,8 +52,7 @@ const defaultBlockComponents = {
   embed: Embed,
   equation: Equation,
   file: File,
-  // `Heading` handles all four heading types itself, so its declared props are their union — wider
-  // than any single slot here needs, which is exactly what makes it safe to narrow per slot.
+  // Heading's props are the union of all 4 heading types, so narrowing per slot here is safe.
   heading_1: Heading as AstroComponent<NotionBlockProps<'heading_1'>>,
   heading_2: Heading as AstroComponent<NotionBlockProps<'heading_2'>>,
   heading_3: Heading as AstroComponent<NotionBlockProps<'heading_3'>>,
@@ -91,8 +85,7 @@ const resolvedComponents = {
   ...components,
 };
 
-// Which component this is depends on `block.type`, resolved only at runtime, so its exact
-// (narrower) prop type can't be proven here — this is the one place that has to trust it.
+// block.type is only known at runtime, so its exact prop type can't be proven here — trust it.
 const resolveComponent = (block: Block) =>
   (resolvedComponents[block.type] ?? UnsupportedBlock) as AstroComponent<NotionBlockProps>;
 ---
