@@ -1,8 +1,9 @@
 import type { DataSourceObjectResponse } from "@notionhq/client";
 import { z } from "astro/zod";
 
+import type { Page } from "~/contents/types"
+
 import { notionClient } from "./client";
-import type { Page } from "./data-source";
 
 type PropertyConfig = DataSourceObjectResponse['properties'][string];
 
@@ -16,7 +17,7 @@ const generateEntryTypes = (properties: Record<string, PropertyConfig>) => {
     .join('\n');
 
   return `
-import type { Property } from '~/contents/components';
+import type { Property } from '~/contents/types';
 import type { Page } from '~/contents';
 
 export type Entry = Omit<Page, 'properties'> & {

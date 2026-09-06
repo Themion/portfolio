@@ -1,3 +1,5 @@
+import type { PageObjectResponse } from "@notionhq/client";
+
 import type { AstroComponent } from "~/types";
 
 import type { ListGroupBlock } from "./list-group-block";
@@ -16,3 +18,5 @@ export type NotionBlockComponentMap = {
 };
 
 export type NotionBlockComponents = Partial<NotionBlockComponentMap>;
+
+export type Page = PageObjectResponse & { children: Block[] };
