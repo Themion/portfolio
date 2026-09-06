@@ -4,9 +4,9 @@ import { withChildren } from "./block";
 import { getQueryClient, notionClient } from "./client";
 import { getCommonInfiniteQueryOptions } from "./common";
 
-export const getDataSourceQueryKey = (dataSourceId: string) => ['data-source', dataSourceId];
+const getDataSourceQueryKey = (dataSourceId: string) => ['data-source', dataSourceId];
 
-export const getDataSourceQueryOptions = (data_source_id: string) => getCommonInfiniteQueryOptions({
+const getDataSourceQueryOptions = (data_source_id: string) => getCommonInfiniteQueryOptions({
   queryKey: getDataSourceQueryKey(data_source_id),
   queryFn: ({ pageParam }) => notionClient.dataSources.query({
     data_source_id,
