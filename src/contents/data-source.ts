@@ -1,13 +1,8 @@
-import type { PageObjectResponse } from "@notionhq/client";
 import type { AstroIntegrationLogger } from "astro";
-
-import type { Block } from "~/contents/components";
 
 import { withChildren } from "./block";
 import { getQueryClient, notionClient } from "./client";
 import { getCommonInfiniteQueryOptions } from "./common";
-
-export type Page = PageObjectResponse & { children: Block[] };
 
 export const getDataSourceQueryKey = (dataSourceId: string) => ['data-source', dataSourceId];
 
