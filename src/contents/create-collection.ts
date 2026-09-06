@@ -7,11 +7,13 @@ import { createDataSourceSchema } from './data-source-schema';
 export interface CreateCollectionParams {
   name: string;
   dataSourceId: string;
+  references?: Record<string, string>;
 }
 
 export const createCollection = ({
   name,
   dataSourceId,
+  references,
 }: CreateCollectionParams) => {
   return defineCollection({
     loader: {
@@ -25,7 +27,7 @@ export const createCollection = ({
           context.store.set({ id: raw.id, data });
         }
       },
-      createSchema: () => createDataSourceSchema(dataSourceId),
+      createSchema: () => createDataSourceSchema(dataSourceId, references),
     } satisfies Loader,
   })
 }
