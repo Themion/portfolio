@@ -1,0 +1,49 @@
+---
+import { type CollectionEntry } from "astro:content";
+
+import { NotionProperty } from "~/contents/components";
+import NotionBlocks from "~/contents/components/block/NotionBlocks.astro";
+
+interface Props {
+  project: CollectionEntry<"project">;
+}
+
+const {
+  project: {
+    data: { properties, children },
+  },
+} = Astro.props;
+---
+
+<div class="[&_h5]:text-md flex flex-col gap-2 [&_h5]:font-semibold">
+  <div>
+    <h4 class="text-lg font-semibold">
+      <NotionProperty property={properties["제목"]} />
+    </h4>
+    <p class="text-neutral-400">
+      <NotionProperty property={properties["기간 시작"]} />
+      {" ~ "}
+      {
+        properties["기간 종료"].date ? (
+          <NotionProperty property={properties["기간 종료"]} />
+        ) : (
+          "(진행중)"
+        )
+      }
+      {" | "}
+      {properties["역할"].multi_select.map((option) => option.name).join(", ")}
+    </p>
+  </div>
+  <div>
+    <h5>배경</h5>
+    <NotionProperty property={properties["배경"]} />
+  </div>
+  <div>
+    <h5>내가 한 일</h5>
+    <NotionBlocks blocks={children} />
+  </div>
+  <div>
+    <h5>결과</h5>
+    <NotionProperty property={properties["결과"]} />
+  </div>
+</div>

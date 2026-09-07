@@ -1,0 +1,12 @@
+---
+import { getCollection } from "astro:content";
+
+import ProjectList from "./ProjectList.astro";
+
+const companies = await getCollection("company");
+---
+
+<section class="flex flex-col">
+  <h2 class="text-3xl font-bold">Project</h2>
+  {companies.map((company) => <ProjectList company={company} />)}
+</section>
