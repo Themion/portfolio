@@ -1,17 +1,17 @@
 ---
-import type { NotionBlockProps } from '~/contents/types';
+import type { NotionBlockProps } from "~/contents/types";
 
-import { RichText } from '../rich-text';
-import NotionBlocks from './NotionBlocks.astro';
+import { RichText } from "../rich-text";
+import NotionBlocks from "./NotionBlocks.astro";
 
-type Props = NotionBlockProps<'bulleted_list_item'>;
+type Props = NotionBlockProps<"bulleted_list_item">;
 
 const { block, components } = Astro.props;
 
 const color = block.bulleted_list_item.color;
 ---
 
-<li data-notion-color={color !== 'default' ? color : undefined}>
+<li data-notion-color={color !== "default" ? color : undefined}>
   <span>
     <RichText richText={block.bulleted_list_item.rich_text} />
   </span>
