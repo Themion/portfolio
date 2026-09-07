@@ -13,7 +13,10 @@ const techStack = createCollection({
 });
 const project = createCollection({
   name: 'project',
-  dataSourceId: import.meta.env.NOTION_PROJECTS_DATASOURCE
+  dataSourceId: import.meta.env.NOTION_PROJECTS_DATASOURCE,
+  references: {
+    "기술 스택": 'techStack'
+  }
 })
 
 export const collections = { company, techStack, project };

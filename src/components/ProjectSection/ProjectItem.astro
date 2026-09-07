@@ -1,0 +1,63 @@
+---
+import { getEntries } from "astro:content";
+import { type CollectionEntry } from "astro:content";
+
+import { NotionBlocks, NotionProperty } from "~/contents/components";
+
+import TechStackIcon from "./TechStackIcon.astro";
+
+interface Props {
+  project: CollectionEntry<"project">;
+}
+
+const {
+  project: {
+    data: { properties, children },
+  },
+} = Astro.props;
+
+const techStacks = await getEntries(properties["기술 스택"].relation);
+---
+
+<div class="[&_h5]:text-md flex flex-col gap-2 [&_h5]:font-semibold">
+  <div>
+    <h4 class="text-lg font-semibold">
+      <NotionProperty property={properties["제목"]} />
+    </h4>
+    <p class="text-neutral-400">
+      <NotionProperty property={properties["기간 시작"]} />
+      {" ~ "}
+      {
+        properties["기간 종료"].date ? (
+          <NotionProperty property={properties["기간 종료"]} />
+        ) : (
+          "(진행중)"
+        )
+      }
+      {" | "}
+      {properties["역할"].multi_select.map((option) => option.name).join(", ")}
+    </p>
+  </div>
+  <div class="flex flex-col gap-1">
+    <h5>사용 기술 스택</h5>
+    <div class="flex flex-row gap-2">
+      {
+        techStacks.map((techStack) => (
+          <TechStackIcon property={techStack.data.properties["아이콘"]} />
+        ))
+      }
+    </div>
+  </div>
+  <div>
+    <h5>배경</h5>
+    <NotionProperty property={properties["배경"]} />
+  </div>
+  <div>
+    <h5>내가 한 일</h5>
+    <NotionBlocks blocks={children} />
+  </div>
+  <div>
+    <h5>결과</h5>
+    <NotionProperty property={properties["결과"]} />
+  </div>
+</div>

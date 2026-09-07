@@ -1,20 +1,20 @@
 ---
-import type { NotionBlockProps } from '~/contents/types';
-import type { AstroComponent } from '~/types';
+import type { NotionBlockProps } from "~/contents/types";
+import type { AstroComponent } from "~/types";
 
-import NumberedListItem from './NumberedListItem.astro';
+import NumberedListItem from "./NumberedListItem.astro";
 
-type Props = NotionBlockProps<'numbered_list'>;
+type Props = NotionBlockProps<"numbered_list">;
 
 const { block, components = {} } = Astro.props;
 
 // Children are already known to be `numbered_list_item`s — rendering them through `NotionBlocks`
 // would re-group them into another `numbered_list` and recurse forever.
 const Item = (components.numbered_list_item ?? NumberedListItem) as AstroComponent<
-  NotionBlockProps<'numbered_list_item'>
+  NotionBlockProps<"numbered_list_item">
 >;
 ---
 
-<ol class="list-decimal list-inside">
+<ol class="list-inside pl-6">
   {block.children.map((item) => <Item block={item} components={components} />)}
 </ol>
