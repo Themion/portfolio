@@ -1,14 +1,18 @@
 ---
-import type { NotionPropertyProps } from '~/contents/types';
+import type { HTMLAttributes } from "astro/types";
 
-type Props = NotionPropertyProps<'select'>;
+import type { NotionPropertyProps } from "~/contents/types";
 
-const { property } = Astro.props;
+interface Props extends NotionPropertyProps<"select"> {
+  htmlProps?: HTMLAttributes<"span">;
+}
+
+const { property, htmlProps } = Astro.props;
 ---
 
 {
   property.select && (
-    <span class="notion-property-select" data-notion-color={property.select.color}>
+    <span data-notion-color={property.select.color} {...htmlProps}>
       {property.select.name}
     </span>
   )

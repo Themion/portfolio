@@ -1,14 +1,18 @@
 ---
-import type { NotionPropertyProps } from '~/contents/types';
+import type { HTMLAttributes } from "astro/types";
 
-import User from './User.astro';
+import type { NotionPropertyProps } from "~/contents/types";
 
-type Props = NotionPropertyProps<'people'>;
+import User from "./User.astro";
 
-const { property } = Astro.props;
+interface Props extends NotionPropertyProps<"people"> {
+  htmlProps?: HTMLAttributes<"ul">;
+}
+
+const { property, htmlProps } = Astro.props;
 ---
 
-<ul class="notion-property-people">
+<ul {...htmlProps}>
   {
     property.people.map((user) => (
       <li>

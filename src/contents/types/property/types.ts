@@ -6,7 +6,7 @@ export type Property = PageObjectResponse['properties'][string];
 
 export interface NotionPropertyProps<T extends Property['type'] = Property['type']> {
   property: Extract<Property, { type: T }>;
-  components: NotionPropertyComponents;
+  components?: NotionPropertyComponents;
 }
 
 export type NotionPropertyComponentMap = {

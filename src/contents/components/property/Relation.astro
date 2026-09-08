@@ -1,17 +1,21 @@
 ---
-import type { NotionPropertyProps } from '~/contents/types';
+import type { HTMLAttributes } from "astro/types";
 
-type Props = NotionPropertyProps<'relation'>;
+import type { NotionPropertyProps } from "~/contents/types";
 
-const { property } = Astro.props;
+interface Props extends NotionPropertyProps<"relation"> {
+  htmlProps?: HTMLAttributes<"ul">;
+}
+
+const { property, htmlProps } = Astro.props;
 ---
 
-<ul class="notion-property-relation">
+<ul {...htmlProps}>
   {
     // No title without a separate fetch, so link by id instead of a resolved title.
     property.relation.map((item) => (
       <li>
-        <a href={`https://www.notion.so/${item.id.replaceAll('-', '')}`}>{item.id}</a>
+        <a href={`https://www.notion.so/${item.id.replaceAll("-", "")}`}>{item.id}</a>
       </li>
     ))
   }

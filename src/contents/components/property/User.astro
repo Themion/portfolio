@@ -1,18 +1,24 @@
 ---
-import type { GroupObjectResponse, PartialUserObjectResponse, UserObjectResponse } from '@notionhq/client';
+import type {
+  GroupObjectResponse,
+  PartialUserObjectResponse,
+  UserObjectResponse,
+} from "@notionhq/client";
+import type { HTMLAttributes } from "astro/types";
 
 interface Props {
   user: PartialUserObjectResponse | UserObjectResponse | GroupObjectResponse;
+  htmlProps?: HTMLAttributes<"span">;
 }
 
-const { user } = Astro.props;
+const { user, htmlProps } = Astro.props;
 
 // A user/group value can arrive partial (id only) when Notion doesn't expand it.
-const name = 'name' in user ? (user.name ?? 'Unknown user') : 'Unknown user';
-const avatarUrl = 'avatar_url' in user ? user.avatar_url : null;
+const name = "name" in user ? (user.name ?? "Unknown user") : "Unknown user";
+const avatarUrl = "avatar_url" in user ? user.avatar_url : null;
 ---
 
-<span class="notion-property-user">
+<span {...htmlProps}>
   {avatarUrl && <img class="notion-property-user-avatar" src={avatarUrl} alt="" loading="lazy" />}
   {name}
 </span>

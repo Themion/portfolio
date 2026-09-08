@@ -1,16 +1,20 @@
 ---
-import type { NotionPropertyProps } from '~/contents/types';
+import type { HTMLAttributes } from "astro/types";
 
-type Props = NotionPropertyProps<'files'>;
+import type { NotionPropertyProps } from "~/contents/types";
 
-const { property } = Astro.props;
+interface Props extends NotionPropertyProps<"files"> {
+  htmlProps?: HTMLAttributes<"ul">;
+}
+
+const { property, htmlProps } = Astro.props;
 ---
 
-<ul class="notion-property-files">
+<ul {...htmlProps}>
   {
     property.files.map((file) => (
       <li>
-        <a href={file.type === 'external' ? file.external.url : file.file.url}>{file.name}</a>
+        <a href={file.type === "external" ? file.external.url : file.file.url}>{file.name}</a>
       </li>
     ))
   }

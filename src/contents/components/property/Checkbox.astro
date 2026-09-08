@@ -1,9 +1,15 @@
 ---
-import type { NotionPropertyProps } from '~/contents/types';
+import type { HTMLAttributes } from "astro/types";
 
-type Props = NotionPropertyProps<'checkbox'>;
+import type { NotionPropertyProps } from "~/contents/types";
 
-const { property } = Astro.props;
+interface Props extends NotionPropertyProps<"checkbox"> {
+  // `type`/`checked`/`disabled` are how this component represents the Notion value — letting a
+  // caller override them would let the rendered state disagree with the actual data.
+  htmlProps?: Omit<HTMLAttributes<"input">, "type" | "checked" | "disabled">;
+}
+
+const { property, htmlProps } = Astro.props;
 ---
 
-<input type="checkbox" checked={property.checkbox} disabled />
+<input type="checkbox" checked={property.checkbox} disabled {...htmlProps} />

@@ -1,14 +1,17 @@
 ---
-import type { NotionPropertyComponents, Property } from '~/contents/types';
+import type { HTMLAttributes } from "astro/types";
+
+import type { NotionPropertyComponents, Property } from "~/contents/types";
 
 interface Props {
   property: Property;
-  components: NotionPropertyComponents;
+  components?: NotionPropertyComponents;
+  htmlProps?: HTMLAttributes<"span">;
 }
 
-const { property } = Astro.props;
+const { property, htmlProps } = Astro.props;
 ---
 
-<span class="notion-property-unsupported" data-notion-property-type={property.type}>
+<span data-notion-property-type={property.type} {...htmlProps}>
   Unsupported Notion property: {property.type}
 </span>

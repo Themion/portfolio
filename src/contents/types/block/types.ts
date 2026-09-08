@@ -10,7 +10,7 @@ export type Block =
 
 export interface NotionBlockProps<T extends Block["type"] = Block["type"]> {
   block: Extract<Block, { type: T }>;
-  components: NotionBlockComponents;
+  components?: NotionBlockComponents;
 }
 
 export type NotionBlockComponentMap = {

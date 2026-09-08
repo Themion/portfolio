@@ -1,14 +1,18 @@
 ---
-import type { NotionPropertyProps } from '~/contents/types';
+import type { HTMLAttributes } from "astro/types";
 
-type Props = NotionPropertyProps<'status'>;
+import type { NotionPropertyProps } from "~/contents/types";
 
-const { property } = Astro.props;
+interface Props extends NotionPropertyProps<"status"> {
+  htmlProps?: HTMLAttributes<"span">;
+}
+
+const { property, htmlProps } = Astro.props;
 ---
 
 {
   property.status && (
-    <span class="notion-property-status" data-notion-color={property.status.color}>
+    <span data-notion-color={property.status.color} {...htmlProps}>
       {property.status.name}
     </span>
   )

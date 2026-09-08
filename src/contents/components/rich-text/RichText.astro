@@ -1,13 +1,15 @@
 ---
-import type { RichTextItemResponse } from '@notionhq/client';
+import type { RichTextItemResponse } from "@notionhq/client";
+import type { HTMLAttributes } from "astro/types";
 
-import TextRun from './TextRun.astro';
+import TextRun from "./TextRun.astro";
 
 interface Props {
   richText: RichTextItemResponse[];
+  htmlProps?: HTMLAttributes<"span">;
 }
 
-const { richText } = Astro.props;
+const { richText, htmlProps } = Astro.props;
 ---
 
-{richText.map((item) => <TextRun item={item} />)}
+<span {...htmlProps}>{richText.map((item) => <TextRun item={item} />)}</span>

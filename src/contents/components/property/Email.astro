@@ -1,14 +1,20 @@
 ---
-import type { NotionPropertyProps } from '~/contents/types';
+import type { HTMLAttributes } from "astro/types";
 
-type Props = NotionPropertyProps<'email'>;
+import type { NotionPropertyProps } from "~/contents/types";
 
-const { property } = Astro.props;
+interface Props extends NotionPropertyProps<"email"> {
+  // `href` is derived from the property's value — letting a caller override it would point the
+  // link somewhere other than what's actually displayed.
+  htmlProps?: Omit<HTMLAttributes<"a">, "href">;
+}
+
+const { property, htmlProps } = Astro.props;
 ---
 
 {
   property.email && (
-    <a class="notion-property-email" href={`mailto:${property.email}`}>
+    <a href={`mailto:${property.email}`} {...htmlProps}>
       {property.email}
     </a>
   )

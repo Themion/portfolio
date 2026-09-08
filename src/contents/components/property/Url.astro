@@ -1,14 +1,20 @@
 ---
-import type { NotionPropertyProps } from '~/contents/types';
+import type { HTMLAttributes } from "astro/types";
 
-type Props = NotionPropertyProps<'url'>;
+import type { NotionPropertyProps } from "~/contents/types";
 
-const { property } = Astro.props;
+interface Props extends NotionPropertyProps<"url"> {
+  // `href` is derived from the property's value — letting a caller override it would point the
+  // link somewhere other than what's actually displayed.
+  htmlProps?: Omit<HTMLAttributes<"a">, "href">;
+}
+
+const { property, htmlProps } = Astro.props;
 ---
 
 {
   property.url && (
-    <a class="notion-property-url" href={property.url}>
+    <a href={property.url} {...htmlProps}>
       {property.url}
     </a>
   )

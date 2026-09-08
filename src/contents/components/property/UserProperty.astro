@@ -1,13 +1,17 @@
 ---
-import type { NotionPropertyProps } from '~/contents/types';
+import type { HTMLAttributes } from "astro/types";
 
-import User from './User.astro';
+import type { NotionPropertyProps } from "~/contents/types";
 
-type Props = NotionPropertyProps<'created_by' | 'last_edited_by'>;
+import User from "./User.astro";
 
-const { property } = Astro.props;
+interface Props extends NotionPropertyProps<"created_by" | "last_edited_by"> {
+  htmlProps?: HTMLAttributes<"span">;
+}
 
-const user = property.type === 'created_by' ? property.created_by : property.last_edited_by;
+const { property, htmlProps } = Astro.props;
+
+const user = property.type === "created_by" ? property.created_by : property.last_edited_by;
 ---
 
-<User user={user} />
+<User user={user} htmlProps={htmlProps} />

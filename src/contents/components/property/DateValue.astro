@@ -1,11 +1,19 @@
 ---
-import type { NotionPropertyProps } from '~/contents/types';
+import type { HTMLAttributes } from "astro/types";
 
-import TimeRange from '../rich-text/TimeRange.astro';
+import type { NotionPropertyProps } from "~/contents/types";
 
-type Props = NotionPropertyProps<'date'>;
+import TimeRange from "../rich-text/TimeRange.astro";
 
-const { property } = Astro.props;
+interface Props extends NotionPropertyProps<"date"> {
+  htmlProps?: HTMLAttributes<"span">;
+}
+
+const { property, htmlProps } = Astro.props;
 ---
 
-{property.date && <TimeRange start={property.date.start} end={property.date.end} />}
+{
+  property.date && (
+    <TimeRange start={property.date.start} end={property.date.end} htmlProps={htmlProps} />
+  )
+}

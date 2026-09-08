@@ -1,18 +1,25 @@
 ---
+import type { HTMLAttributes } from "astro/types";
+
 interface Props {
   start: string;
   end: string | null;
+  htmlProps?: HTMLAttributes<"span">;
 }
 
-const { start, end } = Astro.props;
+const { start, end, htmlProps } = Astro.props;
 ---
 
 {
   end === null ? (
-    <time datetime={start}>{start}</time>
+    // A single date has one native root already — attach htmlProps there directly.
+    <time datetime={start} {...htmlProps}>
+      {start}
+    </time>
   ) : (
-    <Fragment>
+    // A range is two <time> elements — htmlProps needs a wrapper to land on.
+    <span {...htmlProps}>
       <time datetime={start}>{start}</time> ~ <time datetime={end}>{end}</time>
-    </Fragment>
+    </span>
   )
 }

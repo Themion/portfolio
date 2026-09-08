@@ -1,11 +1,17 @@
 ---
-import type { NotionPropertyProps } from '~/contents/types';
+import type { HTMLAttributes } from "astro/types";
 
-type Props = NotionPropertyProps<'created_time' | 'last_edited_time'>;
+import type { NotionPropertyProps } from "~/contents/types";
 
-const { property } = Astro.props;
+interface Props extends NotionPropertyProps<"created_time" | "last_edited_time"> {
+  // `datetime` is derived from the property's value — letting a caller override it would show a
+  // different timestamp than the one this component actually represents.
+  htmlProps?: Omit<HTMLAttributes<"time">, "datetime">;
+}
 
-const value = property.type === 'created_time' ? property.created_time : property.last_edited_time;
+const { property, htmlProps } = Astro.props;
+
+const value = property.type === "created_time" ? property.created_time : property.last_edited_time;
 ---
 
-<time datetime={value}>{value}</time>
+<time datetime={value} {...htmlProps}>{value}</time>
