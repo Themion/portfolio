@@ -3,7 +3,7 @@ import type { NotionPropertyComponents, Property } from '~/contents/types';
 
 interface Props {
   property: Property;
-  components: NotionPropertyComponents;
+  components?: NotionPropertyComponents;
 }
 
 const { property } = Astro.props;

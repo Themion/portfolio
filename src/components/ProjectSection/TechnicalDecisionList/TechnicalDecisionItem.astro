@@ -33,7 +33,7 @@ const { decision } = Astro.props;
     <h6>
       <NotionProperty property={decision.data.properties["제목"]} />
     </h6>
-    <TechnicalDecisionBadge property={decision.data.properties["구분"]} components={{}} />
+    <TechnicalDecisionBadge property={decision.data.properties["구분"]} />
   </summary>
   <NotionBlocks blocks={decision.data.children} />
 </details>

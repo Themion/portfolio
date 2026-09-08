@@ -5,7 +5,7 @@ import NotionBlocks from './NotionBlocks.astro';
 
 interface Props {
   block: Block;
-  components: NotionBlockComponents;
+  components?: NotionBlockComponents;
 }
 
 const { block, components } = Astro.props;
