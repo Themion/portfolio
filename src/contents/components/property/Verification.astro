@@ -1,17 +1,21 @@
 ---
-import type { NotionPropertyProps } from '~/contents/types';
+import type { HTMLAttributes } from "astro/types";
 
-import User from './User.astro';
+import type { NotionPropertyProps } from "~/contents/types";
 
-type Props = NotionPropertyProps<'verification'>;
+import User from "./User.astro";
 
-const { property } = Astro.props;
+interface Props extends NotionPropertyProps<"verification"> {
+  htmlProps?: HTMLAttributes<"span">;
+}
+
+const { property, htmlProps } = Astro.props;
 const { verification } = property;
 ---
 
 {
   verification && (
-    <span class="notion-property-verification" data-state={verification.state}>
+    <span data-state={verification.state} {...htmlProps}>
       {verification.state}
       {verification.verified_by && <User user={verification.verified_by} />}
     </span>

@@ -1,15 +1,21 @@
 ---
-import type { NotionPropertyProps } from '~/contents/types';
+import type { HTMLAttributes } from "astro/types";
 
-type Props = NotionPropertyProps<'place'>;
+import type { NotionPropertyProps } from "~/contents/types";
 
-const { property } = Astro.props;
+interface Props extends NotionPropertyProps<"place"> {
+  // `href` is derived from the property's value — letting a caller override it would point the
+  // link somewhere other than what's actually displayed.
+  htmlProps?: Omit<HTMLAttributes<"a">, "href">;
+}
+
+const { property, htmlProps } = Astro.props;
 const { place } = property;
 ---
 
 {
   place && (
-    <a class="notion-property-place" href={`https://www.google.com/maps?q=${place.lat},${place.lon}`}>
+    <a href={`https://www.google.com/maps?q=${place.lat},${place.lon}`} {...htmlProps}>
       {place.name ?? place.address ?? `${place.lat}, ${place.lon}`}
     </a>
   )

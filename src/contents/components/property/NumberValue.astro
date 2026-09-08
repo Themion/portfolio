@@ -1,9 +1,13 @@
 ---
-import type { NotionPropertyProps } from '~/contents/types';
+import type { HTMLAttributes } from "astro/types";
 
-type Props = NotionPropertyProps<'number'>;
+import type { NotionPropertyProps } from "~/contents/types";
 
-const { property } = Astro.props;
+interface Props extends NotionPropertyProps<"number"> {
+  htmlProps?: HTMLAttributes<"span">;
+}
+
+const { property, htmlProps } = Astro.props;
 ---
 
-{property.number !== null && <span class="notion-property-number">{property.number}</span>}
+{property.number !== null && <span {...htmlProps}>{property.number}</span>}

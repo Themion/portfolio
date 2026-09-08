@@ -1,15 +1,15 @@
 ---
-import type { NotionPropertyProps } from '~/contents/types';
+import type { HTMLAttributes } from "astro/types";
 
-type Props = NotionPropertyProps<'multi_select'>;
+import type { NotionPropertyProps } from "~/contents/types";
 
-const { property } = Astro.props;
+interface Props extends NotionPropertyProps<"multi_select"> {
+  htmlProps?: HTMLAttributes<"ul">;
+}
+
+const { property, htmlProps } = Astro.props;
 ---
 
-<ul class="notion-property-multi-select">
-  {
-    property.multi_select.map((option) => (
-      <li data-notion-color={option.color}>{option.name}</li>
-    ))
-  }
+<ul {...htmlProps}>
+  {property.multi_select.map((option) => <li data-notion-color={option.color}>{option.name}</li>)}
 </ul>
