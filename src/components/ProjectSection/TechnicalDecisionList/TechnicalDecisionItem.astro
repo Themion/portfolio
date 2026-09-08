@@ -2,7 +2,7 @@
 import { type CollectionEntry } from "astro:content";
 import { twMerge } from "tailwind-merge";
 
-import { NotionProperty } from "~/contents/components";
+import { Title } from "~/contents/components";
 import NotionBlocks from "~/contents/components/block/NotionBlocks.astro";
 
 import TechnicalDecisionBadge from "./TechnicalDecisionBadge.astro";
@@ -31,7 +31,7 @@ const { decision } = Astro.props;
 >
   <summary class="flex flex-row items-center gap-2">
     <h6>
-      <NotionProperty property={decision.data.properties["제목"]} />
+      <Title property={decision.data.properties["제목"]} />
     </h6>
     <TechnicalDecisionBadge property={decision.data.properties["구분"]} />
   </summary>

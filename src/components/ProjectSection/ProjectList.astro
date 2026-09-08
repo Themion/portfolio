@@ -1,7 +1,7 @@
 ---
 import { type CollectionEntry, getEntries } from "astro:content";
 
-import { NotionProperty } from "~/contents/components";
+import { DateValue, Title } from "~/contents/components";
 
 import ProjectItem from "./ProjectItem.astro";
 
@@ -16,14 +16,14 @@ const projects = await getEntries(company.data.properties["연결 프로젝트"]
 <div class="grid grid-cols-1 md:grid-cols-[250px_1fr]">
   <div class="sticky top-0 flex h-fit flex-col gap-2">
     <h3 class="text-xl font-semibold">
-      <NotionProperty property={company.data.properties["회사명"]} />
+      <Title property={company.data.properties["회사명"]} />
     </h3>
     <p class="text-md text-neutral-400">
-      <NotionProperty property={company.data.properties["입사일"]} />
+      <DateValue property={company.data.properties["입사일"]} />
       {` ~ `}
       {
         company.data.properties["퇴사일"].date ? (
-          <NotionProperty property={company.data.properties["퇴사일"]} />
+          <DateValue property={company.data.properties["퇴사일"]} />
         ) : (
           "(재직중)"
         )
