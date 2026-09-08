@@ -1,0 +1,30 @@
+---
+import { cva } from "class-variance-authority";
+
+import type { NotionPropertyProps } from "~/contents/types";
+
+type Props = NotionPropertyProps<"select">;
+type PropertyColor = NonNullable<Props["property"]["select"]>["color"];
+
+const { property } = Astro.props;
+const color = property.select?.color ?? "default";
+
+const badgeClass = cva("block rounded-full border px-2 py-0.5 text-xs leading-none", {
+  variants: {
+    color: {
+      blue: "border-blue-300 bg-blue-100",
+      brown: "border-taupe-300 bg-taupe-100",
+      default: "border-neutral-300 bg-neutral-100",
+      gray: "border-gray-300 bg-gray-100",
+      green: "border-green-300 bg-green-100",
+      orange: "border-orange-300 bg-orange-100",
+      pink: "border-pink-300 bg-pink-100",
+      purple: "border-purple-300 bg-purple-100",
+      red: "border-red-300 bg-red-100",
+      yellow: "border-yellow-300 bg-yellow-100",
+    } satisfies Record<PropertyColor, string>,
+  },
+});
+---
+
+{property.select && <span class={badgeClass({ color })}>{property.select.name}</span>}

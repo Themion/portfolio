@@ -5,17 +5,17 @@ import { twMerge } from "tailwind-merge";
 
 import { NotionBlocks, NotionProperty } from "~/contents/components";
 
+import { TechnicalDecisionList } from "./TechnicalDecisionList";
 import TechStackIcon from "./TechStackIcon.astro";
 
 interface Props {
   project: CollectionEntry<"project">;
 }
 
+const { project } = Astro.props;
 const {
-  project: {
-    data: { properties, children },
-  },
-} = Astro.props;
+  data: { properties, children },
+} = project;
 
 const techStacks = await getEntries(properties["기술 스택"].relation);
 ---
@@ -23,8 +23,8 @@ const techStacks = await getEntries(properties["기술 스택"].relation);
 <details
   class={twMerge(
     "[&>summary]:marker:content-none", // 마커 제거
-    "[&>summary]:after:content-['∧']", // after로 마커 대체
-    "[&>summary]:after:duration-(--duration) open:[&>summary]:after:-rotate-180", // after 애니메이션 추가
+    "[&>summary]:after:content-['∨']", // after로 마커 대체
+    "[&>summary]:after:duration-(--duration) open:[&>summary]:after:rotate-180", // after 애니메이션 추가
     "[&::details-content]:h-0 [&::details-content]:overflow-hidden open:[&::details-content]:h-auto", // state 별 height 지정
     "[interpolate-size:allow-keywords]", // height 보간
     "[&::details-content]:transition-discrete", // content-visibility 조정
@@ -32,7 +32,7 @@ const techStacks = await getEntries(properties["기술 스택"].relation);
     "[&::details-content]:ease-in-out [&_*::after]:ease-in-out", // 애니메이션 timing function
   )}
   style={{
-    "--duration": "1000ms",
+    "--duration": "500ms",
   }}
 >
   <summary class="flex flex-row justify-between">
@@ -40,7 +40,7 @@ const techStacks = await getEntries(properties["기술 스택"].relation);
       <NotionProperty property={properties["제목"]} />
     </h4>
   </summary>
-  <div class="[&_h5]:text-md flex flex-col gap-2 [&_h5]:font-semibold">
+  <div class="flex flex-col gap-2 [&_h5]:font-semibold">
     <div>
       <p class="text-neutral-400">
         <NotionProperty property={properties["기간 시작"]} />
@@ -73,6 +73,10 @@ const techStacks = await getEntries(properties["기술 스택"].relation);
     <div>
       <h5>내가 한 일</h5>
       <NotionBlocks blocks={children} />
+    </div>
+    <div>
+      <h5>기술적 의사결정</h5>
+      <TechnicalDecisionList project={project} />
     </div>
     <div>
       <h5>결과</h5>

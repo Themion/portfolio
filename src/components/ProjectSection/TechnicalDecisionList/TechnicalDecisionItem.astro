@@ -1,0 +1,39 @@
+---
+import { type CollectionEntry } from "astro:content";
+import { twMerge } from "tailwind-merge";
+
+import { NotionProperty } from "~/contents/components";
+import NotionBlocks from "~/contents/components/block/NotionBlocks.astro";
+
+import TechnicalDecisionBadge from "./TechnicalDecisionBadge.astro";
+
+interface Props {
+  decision: CollectionEntry<"decision">;
+}
+
+const { decision } = Astro.props;
+---
+
+<details
+  class={twMerge(
+    "[&>summary]:marker:content-none", // 마커 제거
+    "[&>summary]:after:content-['∨'] [&>summary]:after:ml-auto", // after로 마커 대체
+    "[&>summary]:after:duration-(--duration) open:[&>summary]:after:rotate-180", // after 애니메이션 추가
+    "[&::details-content]:h-0 [&::details-content]:overflow-hidden open:[&::details-content]:h-auto", // state 별 height 지정
+    "[interpolate-size:allow-keywords]", // height 보간
+    "[&::details-content]:transition-discrete", // content-visibility 조정
+    "[&::details-content]:transition-[height,content-visibility] [&::details-content]:duration-(--duration)", // 애니메이션 설정
+    "[&::details-content]:ease-in-out [&_*::after]:ease-in-out", // 애니메이션 timing function
+  )}
+  style={{
+    "--duration": "100ms",
+  }}
+>
+  <summary class="flex flex-row items-center gap-2">
+    <h6>
+      <NotionProperty property={decision.data.properties["제목"]} />
+    </h6>
+    <TechnicalDecisionBadge property={decision.data.properties["구분"]} components={{}} />
+  </summary>
+  <NotionBlocks blocks={decision.data.children} />
+</details>
