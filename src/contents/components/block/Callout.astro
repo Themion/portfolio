@@ -12,8 +12,6 @@ const color = block.callout.color;
 ---
 
 <div class="notion-block-callout" data-notion-color={color !== 'default' ? color : undefined}>
-  <span>
-    <RichText richText={block.callout.rich_text} />
-  </span>
+  <RichText richText={block.callout.rich_text} />
   {block.has_children && <NotionBlocks blocks={block.children} components={components} />}
 </div>

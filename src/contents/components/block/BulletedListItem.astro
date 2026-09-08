@@ -12,8 +12,6 @@ const color = block.bulleted_list_item.color;
 ---
 
 <li data-notion-color={color !== "default" ? color : undefined}>
-  <span>
-    <RichText richText={block.bulleted_list_item.rich_text} />
-  </span>
+  <RichText richText={block.bulleted_list_item.rich_text} />
   {block.has_children && <NotionBlocks blocks={block.children} components={components} />}
 </li>

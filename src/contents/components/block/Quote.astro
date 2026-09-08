@@ -12,8 +12,6 @@ const color = block.quote.color;
 ---
 
 <blockquote data-notion-color={color !== 'default' ? color : undefined}>
-  <span>
-    <RichText richText={block.quote.rich_text} />
-  </span>
+  <RichText richText={block.quote.rich_text} />
   {block.has_children && <NotionBlocks blocks={block.children} components={components} />}
 </blockquote>
