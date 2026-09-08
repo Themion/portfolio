@@ -1,11 +1,15 @@
 ---
-import type { NotionBlockProps } from '~/contents/types';
+import type { HTMLAttributes } from "astro/types";
 
-import Equation from '../rich-text/Equation.astro';
+import type { NotionBlockProps } from "~/contents/types";
 
-type Props = NotionBlockProps<'equation'>;
+import Equation from "../rich-text/Equation.astro";
 
-const { block } = Astro.props;
+interface Props extends NotionBlockProps<"equation"> {
+  htmlProps?: Omit<HTMLAttributes<"img">, "src" | "alt">;
+}
+
+const { block, htmlProps } = Astro.props;
 ---
 
-<Equation expression={block.equation.expression} />
+<Equation expression={block.equation.expression} htmlProps={htmlProps} />

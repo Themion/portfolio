@@ -1,11 +1,15 @@
 ---
-import type { NotionPropertyProps } from '~/contents/types';
+import type { HTMLAttributes } from "astro/types";
 
-import { RichText } from '../rich-text';
+import type { NotionPropertyProps } from "~/contents/types";
 
-type Props = NotionPropertyProps<'title'>;
+import { RichText } from "../rich-text";
 
-const { property } = Astro.props;
+interface Props extends NotionPropertyProps<"title"> {
+  htmlProps?: HTMLAttributes<"span">;
+}
+
+const { property, htmlProps } = Astro.props;
 ---
 
-<RichText richText={property.title} />
+<RichText richText={property.title} htmlProps={htmlProps} />
