@@ -1,14 +1,19 @@
 ---
+import type { HTMLAttributes } from "astro/types";
+
 interface Props {
   expression: string;
+  // `src`/`alt` are derived from the expression — letting a caller override them would show a
+  // different equation image than the alt text (or content) describes.
+  htmlProps?: Omit<HTMLAttributes<"img">, "src" | "alt">;
 }
 
-const { expression } = Astro.props;
+const { expression, htmlProps } = Astro.props;
 
-const content = expression.replaceAll('\n', '');
+const content = expression.replaceAll("\n", "");
 const src = `http://www.sciweavers.org/tex2img.php?eq=${encodeURIComponent(
   content,
 )}&bc=White&fc=Black&im=jpg&fs=20&ff=arev&edit=`;
 ---
 
-<img loading="lazy" src={src} alt={content} />
+<img loading="lazy" src={src} alt={content} {...htmlProps} />
