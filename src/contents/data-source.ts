@@ -1,10 +1,11 @@
+import type { QueryKey } from "@tanstack/query-core";
 import type { AstroIntegrationLogger } from "astro";
 
 import { withChildren } from "./block";
 import { getQueryClient, notionClient } from "./client";
 import { getCommonInfiniteQueryOptions } from "./common";
 
-const getDataSourceQueryKey = (dataSourceId: string) => ['data-source', dataSourceId];
+const getDataSourceQueryKey = (dataSourceId: string) => ['data-source', dataSourceId] satisfies QueryKey;
 
 const getDataSourceQueryOptions = (data_source_id: string) => getCommonInfiniteQueryOptions({
   queryKey: getDataSourceQueryKey(data_source_id),

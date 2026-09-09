@@ -15,11 +15,13 @@ export const createCollection = ({
   dataSourceId,
   references,
 }: CreateCollectionParams) => {
+  const getEntries = getDataSource(dataSourceId);
+
   return defineCollection({
     loader: {
       name,
       load: async (context) => {
-        const entries = await getDataSource(dataSourceId)(context.logger);
+        const entries = await getEntries(context.logger);
 
         context.store.clear();
         for (const raw of entries) {

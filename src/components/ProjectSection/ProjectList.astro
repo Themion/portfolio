@@ -1,7 +1,8 @@
 ---
-import { type CollectionEntry, getEntries } from "astro:content";
+import { type CollectionEntry } from "astro:content";
 
 import { DateValue, Title } from "~/contents/components";
+import { getSortedEntries } from "~/utils/get-sorted-entries";
 
 import ProjectItem from "./ProjectItem.astro";
 
@@ -10,7 +11,11 @@ interface Props {
 }
 
 const { company } = Astro.props;
-const projects = await getEntries(company.data.properties["연결 프로젝트"].relation);
+
+const projects = await getSortedEntries(
+  company.data.properties["연결 프로젝트"].relation,
+  (project) => project.data.properties["순서"].number ?? 0,
+);
 ---
 
 <div class="grid grid-cols-1 md:grid-cols-[250px_1fr]">
