@@ -27,4 +27,9 @@ const project = createCollection({
   }
 });
 
-export const collections = { company, techStack, project, decision };
+const education = createCollection({
+  name: 'education',
+  dataSourceId: import.meta.env.NOTION_EDUCATIONS_DATASOURCE,
+});
+
+export const collections = { company, techStack, project, decision, education };
