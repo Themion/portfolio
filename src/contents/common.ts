@@ -1,5 +1,5 @@
 import type { NotionClientError } from "@notionhq/client";
-import { type InfiniteQueryExecuteOptions } from "@tanstack/query-core";
+import { type InfiniteQueryExecuteOptions, type QueryKey } from "@tanstack/query-core";
 
 interface NotionInfiniteResponse<T> {
   next_cursor: string | null;
@@ -10,7 +10,7 @@ export type InfiniteNotionQueryOptions<T> = InfiniteQueryExecuteOptions<
   NotionInfiniteResponse<T>,
   NotionClientError,
   T[],
-  string[],
+  QueryKey,
   string | null
 >
 
