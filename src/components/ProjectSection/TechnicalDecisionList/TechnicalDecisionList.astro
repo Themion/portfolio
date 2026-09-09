@@ -1,6 +1,8 @@
 ---
-import { type CollectionEntry, getEntries } from "astro:content";
+import { type CollectionEntry } from "astro:content";
 import { twMerge } from "tailwind-merge";
+
+import { getSortedEntries } from "~/utils/get-sorted-entries";
 
 import TechnicalDecisionItem from "./TechnicalDecisionItem.astro";
 
@@ -9,7 +11,10 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const decisions = await getEntries(project.data.properties["기술적 의사결정"].relation);
+const decisions = await getSortedEntries(
+  project.data.properties["기술적 의사결정"].relation,
+  (decision) => decision.data.properties["순서"].number ?? 0,
+);
 ---
 
 <ul class="rounded-lg border border-neutral-400 bg-neutral-100 px-6 py-2">
