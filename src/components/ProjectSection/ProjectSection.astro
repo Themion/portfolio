@@ -7,10 +7,15 @@ import Toggle from "./Toggle.astro";
 const companies = await getCollection("company");
 ---
 
-<section class="flex flex-col">
+<section
+  class="flex flex-col"
+  style={{
+    "--duration": "500ms",
+  }}
+>
   <div class="flex flex-row items-center justify-between">
     <h2 class="text-3xl font-bold">Project</h2>
-    <Toggle label="핵심 프로젝트만 보기" />
+    <Toggle label="핵심 프로젝트만 보기" defaultValue />
   </div>
   {companies.map((company) => <ProjectList company={company} />)}
 </section>
