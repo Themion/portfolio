@@ -1,0 +1,33 @@
+---
+import { twMerge } from "tailwind-merge";
+
+interface Props {
+  label?: string;
+}
+
+const { label = "" } = Astro.props;
+---
+
+<label class="group flex flex-row items-center gap-1 [&_*]:ease-in-out">
+  <span
+    class="relative h-(--height) w-(--width) rounded-full bg-neutral-300"
+    style={{
+      "--width": "48px",
+      "--height": "24px",
+      "--padding": "4px",
+    }}
+  >
+    <span
+      class={twMerge(
+        "size-(--size) rounded-full bg-white",
+        "absolute top-1/2 -translate-y-1/2",
+        "right-(--padding) group-has-[input:checked]:right-[calc(var(--width)-var(--padding)-var(--size))]",
+        "duration-(--duration) transition-[right]",
+      )}
+      style={{
+        "--size": "calc(var(--height) - var(--padding) * 2)",
+      }}></span>
+  </span>
+  <input type="checkbox" data-filter="project" class="hidden" />
+  <span>{label}</span>
+</label>
