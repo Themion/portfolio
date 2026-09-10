@@ -2,10 +2,10 @@
 import { twMerge } from "tailwind-merge";
 
 interface Props {
-  label: string;
+  label?: string;
 }
 
-const { label } = Astro.props;
+const { label = "" } = Astro.props;
 ---
 
 <label class="group flex flex-row items-center gap-1">
