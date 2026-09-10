@@ -30,10 +30,13 @@ const techStacks = await getEntries(properties["기술 스택"].relation);
     "[&::details-content]:transition-discrete", // content-visibility 조정
     "[&::details-content]:transition-[height,content-visibility] [&::details-content]:duration-(--duration)", // 애니메이션 설정
     "[&::details-content]:ease-in-out [&_*::after]:ease-in-out", // 애니메이션 timing function
+    "[body_section:has(input[type=checkbox][data-filter=project]:checked)_&[data-is-important=false]]:hidden", // 핵심 프로젝트만 보기 필터 적용 시 숨김
   )}
   style={{
     "--duration": "500ms",
   }}
+  data-type="project"
+  data-is-important={project.data.properties["핵심 프로젝트"].checkbox}
 >
   <summary class="flex flex-row justify-between">
     <h4 class="inline-block text-lg font-semibold">
