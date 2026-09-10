@@ -3,10 +3,9 @@ import { twMerge } from "tailwind-merge";
 
 interface Props {
   label?: string;
-  defaultValue?: boolean;
 }
 
-const { label = "", defaultValue = false } = Astro.props;
+const { label = "" } = Astro.props;
 ---
 
 <label class="group flex flex-row items-center gap-1 [&_*]:ease-in-out">
@@ -29,6 +28,6 @@ const { label = "", defaultValue = false } = Astro.props;
         "--size": "calc(var(--height) - var(--padding) * 2)",
       }}></span>
   </span>
-  <input type="checkbox" data-filter="project" class="hidden" checked={defaultValue} />
+  <input type="checkbox" data-filter="project" class="hidden" />
   <span>{label}</span>
 </label>

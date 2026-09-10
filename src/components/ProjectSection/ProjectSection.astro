@@ -15,7 +15,7 @@ const companies = await getCollection("company");
 >
   <div class="flex flex-row items-center justify-between">
     <h2 class="text-3xl font-bold">Project</h2>
-    <Toggle label="핵심 프로젝트만 보기" defaultValue />
+    <Toggle label="핵심 프로젝트만 보기" />
   </div>
   {companies.map((company) => <ProjectList company={company} />)}
 </section>
