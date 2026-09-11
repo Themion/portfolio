@@ -1,3 +1,8 @@
+---
+import EmailContact from "./EmailContact.astro";
+import PhoneContact from "./PhoneContact.astro";
+---
+
 <section class="flex flex-col gap-6">
   <div class="flex flex-col gap-4">
     <h1 class="text-4xl font-bold tracking-wider">이상헌</h1>
@@ -13,15 +18,11 @@
       경험했습니다.
     </p>
   </div>
-  <ul class="flex flex-row gap-2 [&>li]:rounded [&>li]:border [&>li]:p-2">
-    <li>
-      <a href="mailto:test123@example.com">메일 보내기</a>
-    </li>
-    <li>
-      <a href="sms:010-2033-5504">문자 보내기</a>
-    </li>
-    <li>
-      <a href="https://github.com/Themion">GitHub</a>
-    </li>
-  </ul>
+  <div class="flex flex-row items-center gap-2 text-neutral-500">
+    <EmailContact email="themion@naver.com" />
+    <div class="h-5 w-px bg-neutral-500"></div>
+    <PhoneContact phone="010-2033-5504" />
+    <div class="h-5 w-px bg-neutral-500"></div>
+    <a href="https://github.com/Themion">GitHub</a>
+  </div>
 </section>

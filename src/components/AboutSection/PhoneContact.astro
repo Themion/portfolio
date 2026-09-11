@@ -1,0 +1,9 @@
+---
+interface Props {
+  phone: string;
+}
+
+const { phone } = Astro.props;
+---
+
+<a href={`sms:${phone}`}>{phone}</a>
