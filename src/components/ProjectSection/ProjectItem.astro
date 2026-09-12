@@ -39,6 +39,7 @@ const techStacks = await getEntries(properties["기술 스택"].relation);
   style={{
     "--duration": "500ms",
   }}
+  open={project.data.properties["핵심 프로젝트"].checkbox}
   data-type="project"
   data-is-important={project.data.properties["핵심 프로젝트"].checkbox}
 >
