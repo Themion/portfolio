@@ -29,8 +29,14 @@ const { decision } = Astro.props;
     "--duration": "100ms",
   }}
 >
-  <summary class="flex flex-row items-center gap-2">
-    <h6>
+  <summary
+    class={twMerge(
+      "flex flex-row items-center gap-2 rounded p-1",
+      "cursor-pointer hover:bg-notion/4",
+      "after:text-arrow-sm after:text-notion/40",
+    )}
+  >
+    <h6 class="text-decision-title font-medium">
       <Title property={decision.data.properties["제목"]} />
     </h6>
     <TechnicalDecisionBadge property={decision.data.properties["구분"]} />

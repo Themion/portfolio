@@ -30,11 +30,12 @@ const techStacks = await getEntries(properties["기술 스택"].relation);
     "[&::details-content]:transition-discrete", // content-visibility 조정
     "[&::details-content]:transition-[height,content-visibility] [&::details-content]:duration-(--duration)", // 애니메이션 설정
     "[&::details-content]:ease-in-out [&_*::after]:ease-in-out", // 애니메이션 timing function
-    "h-auto overflow-hidden visible transition-[height,margin-bottom,visibility] duration-(--duration) delay-0 ease-in-out", // 숨김 애니메이션 베이스(표시될 때는 모두 즉시 전환)
+    "h-auto overflow-hidden opacity-100 transition-[height,margin-bottom,opacity] duration-(--duration) delay-0 ease-in-out", // 숨김 애니메이션 베이스(표시될 때는 모두 즉시 전환)
     "[:has(input[type=checkbox][data-filter=project]:checked)_&[data-is-important=false]]:h-0", // 핵심 프로젝트만 보기 필터 적용 시 높이 0으로 축소
     "[:has(input[type=checkbox][data-filter=project]:checked)_&[data-is-important=false]]:-mb-6", // 부모 gap-6을 음수 마진으로 상쇄해 gap 튐 방지
-    "[:has(input[type=checkbox][data-filter=project]:checked)_&[data-is-important=false]]:invisible", // 숨겨질 때는 시각적으로만 숨김(레이아웃은 height/margin이 담당)
+    "[:has(input[type=checkbox][data-filter=project]:checked)_&[data-is-important=false]]:opacity-0", // 숨겨질 때는 시각적으로만 숨김(레이아웃은 height/margin이 담당)
     "[:has(input[type=checkbox][data-filter=project]:checked)_&[data-is-important=false]]:delay-[0s,0s,var(--duration)]", // height/margin은 즉시, visibility 전환만 애니메이션이 끝난 뒤로 지연
+    "rounded-lg border border-notion/9", // 카드 테두리
   )}
   style={{
     "--duration": "500ms",
@@ -42,14 +43,25 @@ const techStacks = await getEntries(properties["기술 스택"].relation);
   data-type="project"
   data-is-important={project.data.properties["핵심 프로젝트"].checkbox}
 >
-  <summary class="flex flex-row justify-between">
-    <h4 class="inline-block text-lg font-semibold">
+  <summary
+    class={twMerge(
+      "flex flex-row items-center justify-between gap-2.5 px-4 py-3.5",
+      "hover:bg-notion/3 cursor-pointer",
+      "after:text-arrow after:text-notion/45",
+    )}
+  >
+    <h4 class="text-project-title inline-block font-semibold">
       <Title property={properties["제목"]} />
     </h4>
   </summary>
-  <div class="flex flex-col gap-2 [&_h5]:font-semibold">
+  <div
+    class={twMerge(
+      "flex flex-col gap-2 px-4 pt-2 pb-5 pl-10",
+      "[&_h5]:text-label-sm [&_h5]:text-notion/50 [&_h5]:font-bold",
+    )}
+  >
     <div>
-      <p class="text-neutral-400">
+      <p class="text-project-meta text-notion/50">
         <DateValue property={properties["기간 시작"]} />
         {" ~ "}
         {
@@ -73,11 +85,11 @@ const techStacks = await getEntries(properties["기술 스택"].relation);
         }
       </div>
     </div>
-    <div>
+    <div class="text-body-sm">
       <h5>배경</h5>
       <RichTextValue property={properties["배경"]} />
     </div>
-    <div>
+    <div class="text-body-sm">
       <h5>내가 한 일</h5>
       <NotionBlocks blocks={children} />
     </div>
@@ -85,7 +97,7 @@ const techStacks = await getEntries(properties["기술 스택"].relation);
       <h5>기술적 의사결정</h5>
       <TechnicalDecisionList project={project} />
     </div>
-    <div>
+    <div class="text-body-sm">
       <h5>결과</h5>
       <RichTextValue property={properties["결과"]} />
     </div>

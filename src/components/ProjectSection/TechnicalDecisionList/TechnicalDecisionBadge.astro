@@ -9,7 +9,7 @@ type PropertyColor = NonNullable<Props["property"]["select"]>["color"];
 const { property } = Astro.props;
 const color = property.select?.color ?? "default";
 
-const badgeClass = cva("block rounded-full border px-2 py-0.5 text-xs leading-none", {
+const badgeClass = cva("text-tag block rounded-sm border px-1.5 py-0.5 leading-none font-semibold", {
   variants: {
     color: {
       blue: "border-blue-300 bg-blue-100",

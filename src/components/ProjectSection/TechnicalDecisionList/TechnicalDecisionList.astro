@@ -17,12 +17,12 @@ const decisions = await getSortedEntries(
 );
 ---
 
-<ul class="rounded-lg border border-neutral-400 bg-neutral-100 px-6 py-2">
+<ul class="rounded-lg border border-notion/9 px-6 py-2">
   {
     decisions.map((decision) => (
       <li
         class={twMerge(
-          "border-b border-neutral-300 last-of-type:border-b-0",
+          "border-b border-notion/9 last-of-type:border-b-0",
           "-mx-(--underline-overflow) px-(--underline-overflow) py-1",
         )}
         style={{
