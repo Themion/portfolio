@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { twMerge } from "tailwind-merge";
 
 import { NotionBlocks, Title } from "~/contents/components";
 
@@ -16,31 +17,71 @@ const dialogId = `skill-modal-${page.id}`;
 
 <button
   type="button"
-  class="flex flex-row items-center gap-2 rounded border border-neutral-200 p-2"
+  class={twMerge(
+    "border-notion/9 group h-fit w-36 rounded-lg border p-4",
+    "flex flex-col items-center gap-1.5",
+    "mb-(--label-size) hover:mb-0 duration-(--duration) ease-linear",
+  )}
   aria-haspopup="dialog"
   data-skill-trigger={dialogId}
+  style={{
+    "--label-size": "14px",
+    "--duration": "100ms",
+  }}
 >
-  <TechStackIcon property={properties["아이콘"]} />
-  <Title property={properties["기술명"]} />
+  <TechStackIcon
+    property={properties["아이콘"]}
+    htmlProps={{
+      class: "size-12 rounded-lg",
+      alt: properties["기술명"].title.map((item) => item.plain_text).join(""),
+    }}
+  />
+  <Title
+    property={properties["기술명"]}
+    htmlProps={{
+      class: twMerge(
+        "text-(length:--label-size) leading-none transition-[height,opacity,margin] ease-in-out",
+        "opacity-0 group-hover:opacity-100",
+        "h-0 group-hover:h-(--label-size) duration-(--duration) ease-linear",
+      ),
+    }}
+  />
 </button>
 
-<dialog id={dialogId} class="m-auto max-w-md rounded-xl backdrop:bg-black/50">
-  <div class="p-6">
-    <div class="flex flex-row items-center gap-2">
-      <TechStackIcon property={properties["아이콘"]} />
-      <Title property={properties["기술명"]} />
+<dialog
+  id={dialogId}
+  class={twMerge(
+    "m-auto max-w-105 rounded-xl shadow-xl backdrop:bg-neutral-950/45",
+    "transition-all transition-discrete duration-(--duration) ease-in-out", // 애니메이션 스타일 지정
+    "backdrop:transition-all backdrop:transition-discrete backdrop:duration-(--duration) backdrop:ease-in-out", // backdrop 애니메이션 스타일 지정
+    "open:translate-y-0 open:scale-100 open:opacity-100", // open 시 animation 지정
+    "starting:open:scale-85 starting:open:translate-y-[8px] starting:open:opacity-0", // open 시 starting-style 지정
+    "open:backdrop:opacity-100 starting:open:backdrop:opacity-0", // open 시 backdrop 지정
+    "not-open:translate-y-[8px] not-open:scale-85 not-open:opacity-0 not-open:backdrop:opacity-0", // close 시 애니메이션 지정
+  )}
+  style={{
+    "--duration": "100ms",
+  }}
+>
+  <div class="p-7">
+    <div class="mb-4 flex flex-row items-center gap-3">
+      <TechStackIcon property={properties["아이콘"]} htmlProps={{ class: "size-8 rounded" }} />
+      <Title
+        property={properties["기술명"]}
+        htmlProps={{ class: "text-(length:--text-modal-title) text-notion/90 font-bold" }}
+      />
       <form method="dialog" class="ml-auto">
         <button
           type="submit"
           autofocus
           aria-label="닫기"
-          class="rounded-full bg-neutral-200 px-2 py-1 text-sm text-neutral-500 hover:bg-neutral-100"
+          class="hover:bg-notion/6 text-notion/50 rounded-md px-2 py-1 text-sm"
         >
           ✕
         </button>
       </form>
     </div>
-    <div class="mt-4">
+    <div class="text-notion/75 text-(length:--text-modal-desc) leading-[1.6]">
       <NotionBlocks blocks={page.data.children} />
     </div>
   </div>

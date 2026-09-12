@@ -1,1 +1,16 @@
 @import "tailwindcss";
+@import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
+
+@theme {
+  --color-notion: rgb(55, 53, 47);
+
+  --text-hero: 40px;
+  --text-body-sm: 15px;
+  --text-label-sm: 13px;
+  --text-project-meta: 13px;
+  --text-arrow: 11px;
+  --text-tag: 11px;
+  --text-arrow-sm: 10px;
+  --text-modal-title: 19px;
+  --text-modal-desc: 14.5px;
+}

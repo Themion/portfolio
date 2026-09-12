@@ -1,12 +1,16 @@
 ---
+import type { HTMLAttributes } from "astro/types";
+import { twMerge } from "tailwind-merge";
+
 import type { Property } from "~/contents/types";
 import { downloadFile } from "~/contents/utils/download-file";
 
 type Props = {
   property: Extract<Property, { type: "files" }>;
+  htmlProps?: Omit<HTMLAttributes<"img">, "src">;
 };
 
-const { property } = Astro.props;
+const { property, htmlProps: { class: customClass, alt: customAlt, ...props } = {} } = Astro.props;
 
 const imgProps = await Promise.all(
   property.files.map(async (file): Promise<{ src: string; alt: string }> => {
@@ -23,8 +27,11 @@ const imgProps = await Promise.all(
 
 {
   imgProps.map(({ src, alt }) => (
-    <div class="size-8 rounded object-contain p-1 shadow-sm">
-      <img src={src} alt={alt} class="size-full rounded object-contain" />
-    </div>
+    <img
+      src={src}
+      alt={customAlt ?? alt}
+      class={twMerge("size-full object-contain", customClass)}
+      {...props}
+    />
   ))
 }

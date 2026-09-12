@@ -8,21 +8,21 @@ interface Props {
 const { label = "" } = Astro.props;
 ---
 
-<label class="group flex flex-row items-center gap-1 [&_*]:ease-in-out">
+<label class="group flex flex-row items-center gap-2 text-sm text-notion/70 [&_*]:ease-in-out">
   <span
-    class="relative h-(--height) w-(--width) rounded-full bg-neutral-300"
+    class="relative h-(--height) w-(--width) rounded-full bg-notion/20 transition-colors group-has-[input:checked]:bg-blue-500"
     style={{
-      "--width": "48px",
-      "--height": "24px",
-      "--padding": "4px",
+      "--width": "32px",
+      "--height": "18px",
+      "--padding": "2px",
     }}
   >
     <span
       class={twMerge(
-        "size-(--size) rounded-full bg-white",
+        "size-(--size) rounded-full bg-white shadow-[0_1px_2px_rgba(0,0,0,0.25)]",
         "absolute top-1/2 -translate-y-1/2",
-        "right-(--padding) group-has-[input:checked]:right-[calc(var(--width)-var(--padding)-var(--size))]",
-        "duration-(--duration) transition-[right]",
+        "left-(--padding) group-has-[input:checked]:left-[calc(var(--width)-var(--padding)-var(--size))]",
+        "duration-(--duration) transition-[left]",
       )}
       style={{
         "--size": "calc(var(--height) - var(--padding) * 2)",

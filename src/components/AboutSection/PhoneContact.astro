@@ -6,4 +6,4 @@ interface Props {
 const { phone } = Astro.props;
 ---
 
-<a href={`sms:${phone}`}>{phone}</a>
+<a href={`sms:${phone}`} class="no-underline hover:text-blue-500">{phone}</a>

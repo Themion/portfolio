@@ -16,9 +16,7 @@ const { decision } = Astro.props;
 
 <details
   class={twMerge(
-    "[&>summary]:marker:content-none", // 마커 제거
-    "[&>summary]:after:content-['∨'] [&>summary]:after:ml-auto", // after로 마커 대체
-    "[&>summary]:after:duration-(--duration) open:[&>summary]:after:rotate-180", // after 애니메이션 추가
+    "group/decision",
     "[&::details-content]:h-0 [&::details-content]:overflow-hidden open:[&::details-content]:h-auto", // state 별 height 지정
     "[interpolate-size:allow-keywords]", // height 보간
     "[&::details-content]:transition-discrete", // content-visibility 조정
@@ -29,11 +27,20 @@ const { decision } = Astro.props;
     "--duration": "100ms",
   }}
 >
-  <summary class="flex flex-row items-center gap-2">
-    <h6>
+  <summary
+    class={twMerge(
+      "flex flex-row items-center gap-2 rounded p-1",
+      "cursor-pointer hover:bg-notion/4",
+      "before:content-['▶'] before:text-(length:--text-arrow-sm) before:text-notion/40",
+      "before:duration-(--duration) group-open/decision:before:rotate-90", // after 애니메이션 추가
+    )}
+  >
+    <h6 class="text-sm font-medium">
       <Title property={decision.data.properties["제목"]} />
     </h6>
     <TechnicalDecisionBadge property={decision.data.properties["구분"]} />
   </summary>
-  <NotionBlocks blocks={decision.data.children} />
+  <div class="pl-6">
+    <NotionBlocks blocks={decision.data.children} />
+  </div>
 </details>
