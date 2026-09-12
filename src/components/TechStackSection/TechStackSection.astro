@@ -1,36 +1,17 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
+import { getSortedCollections } from "~/utils/get-sorted-collections";
 
-import TechStackCard from "./TechStackCard.astro";
+import TechStackGroup from "./TechStackGroup.astro";
 
-const techStacks = await getCollection("techStack");
-
-const techStackMap = new Map<string, CollectionEntry<"techStack">[]>();
-
-techStacks.forEach((techStack) => {
-  const type = techStack.data.properties["분류"].select?.name ?? "";
-  const currentValue = techStackMap.get(type) ?? [];
-  currentValue.push(techStack);
-  techStackMap.set(type, currentValue);
-});
-
-const entries = [...techStackMap.entries()];
+const techStackTypes = await getSortedCollections(
+  "techStackType",
+  ({ data }) => data.properties["순서"].number ?? Infinity,
+);
 ---
 
 <section class="flex flex-col gap-6">
   <h2 class="text-3xl font-bold">Tech Stacks</h2>
   <div class="flex flex-col gap-4">
-    {
-      entries.map(([key, entry]) => (
-        <div class="flex flex-col gap-2">
-          <h3 class="text-xl font-semibold">{key}</h3>
-          <div class="flex flex-row flex-wrap gap-4">
-            {entry.map((page) => (
-              <TechStackCard page={page} />
-            ))}
-          </div>
-        </div>
-      ))
-    }
+    {techStackTypes.map((techStackType) => <TechStackGroup techStackType={techStackType} />)}
   </div>
 </section>
