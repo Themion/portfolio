@@ -1,6 +1,5 @@
 ---
 import { type CollectionEntry } from "astro:content";
-import { twMerge } from "tailwind-merge";
 
 import { getSortedEntries } from "~/utils/get-sorted-entries";
 
@@ -17,18 +16,10 @@ const decisions = await getSortedEntries(
 );
 ---
 
-<ul class="rounded-lg border border-notion/9 px-6 py-2">
+<ul>
   {
     decisions.map((decision) => (
-      <li
-        class={twMerge(
-          "border-b border-notion/9 last-of-type:border-b-0",
-          "-mx-(--underline-overflow) px-(--underline-overflow) py-1",
-        )}
-        style={{
-          "--underline-overflow": "8px",
-        }}
-      >
+      <li>
         <TechnicalDecisionItem decision={decision} />
       </li>
     ))
