@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { twMerge } from "tailwind-merge";
 
 import { NotionBlocks, Title } from "~/contents/components";
 
@@ -16,18 +17,40 @@ const dialogId = `skill-modal-${page.id}`;
 
 <button
   type="button"
-  class="flex flex-row items-center gap-2 rounded border border-neutral-200 p-2"
+  class={twMerge(
+    "border-notion/9 group flex h-fit w-36 flex-col items-center gap-1.5 rounded-lg border p-4",
+    "mb-(--label-size) hover:mb-0 duration-(--duration) ease-linear",
+  )}
   aria-haspopup="dialog"
   data-skill-trigger={dialogId}
+  style={{
+    "--label-size": "14px",
+    "--duration": "100ms",
+  }}
 >
-  <TechStackIcon property={properties["아이콘"]} />
-  <Title property={properties["기술명"]} />
+  <TechStackIcon
+    property={properties["아이콘"]}
+    htmlProps={{
+      class: "size-12 rounded-lg",
+      alt: properties["기술명"].title.map((item) => item.plain_text).join(""),
+    }}
+  />
+  <Title
+    property={properties["기술명"]}
+    htmlProps={{
+      class: twMerge(
+        "text-(length:--label-size) leading-none transition-[height,opacity,margin] ease-in-out",
+        "opacity-0 group-hover:opacity-100",
+        "h-0 group-hover:h-(--label-size) duration-(--duration) ease-linear",
+      ),
+    }}
+  />
 </button>
 
 <dialog id={dialogId} class="m-auto max-w-md rounded-xl backdrop:bg-black/50">
   <div class="p-6">
     <div class="flex flex-row items-center gap-2">
-      <TechStackIcon property={properties["아이콘"]} />
+      <TechStackIcon property={properties["아이콘"]} htmlProps={{ class: "size-6 rounded" }} />
       <Title property={properties["기술명"]} />
       <form method="dialog" class="ml-auto">
         <button
