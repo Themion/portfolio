@@ -18,7 +18,8 @@ const dialogId = `skill-modal-${page.id}`;
 <button
   type="button"
   class={twMerge(
-    "border-notion/9 group flex h-fit w-36 flex-col items-center gap-1.5 rounded-lg border p-4",
+    "border-notion/9 group h-fit w-36 rounded-lg border p-4",
+    "flex flex-col items-center gap-1.5",
     "mb-(--label-size) hover:mb-0 duration-(--duration) ease-linear",
   )}
   aria-haspopup="dialog"
@@ -47,7 +48,21 @@ const dialogId = `skill-modal-${page.id}`;
   />
 </button>
 
-<dialog id={dialogId} class="m-auto max-w-md rounded-xl backdrop:bg-black/50">
+<dialog
+  id={dialogId}
+  class={twMerge(
+    "m-auto max-w-md rounded-xl backdrop:bg-black/50",
+    "transition-all transition-discrete duration-(--duration) ease-in-out", // 애니메이션 스타일 지정
+    "backdrop:transition-all backdrop:transition-discrete backdrop:duration-(--duration) backdrop:ease-in-out", // backdrop 애니메이션 스타일 지정
+    "open:translate-y-0 open:scale-100 open:opacity-100", // open 시 animation 지정
+    "starting:open:scale-85 starting:open:translate-y-[8px] starting:open:opacity-0", // open 시 starting-style 지정
+    "open:backdrop:opacity-100 starting:open:backdrop:opacity-0", // open 시 backdrop 지정
+    "not-open:translate-y-[8px] not-open:scale-85 not-open:opacity-0 not-open:backdrop:opacity-0", // close 시 애니메이션 지정
+  )}
+  style={{
+    "--duration": "100ms",
+  }}
+>
   <div class="p-6">
     <div class="flex flex-row items-center gap-2">
       <TechStackIcon property={properties["아이콘"]} htmlProps={{ class: "size-6 rounded" }} />
@@ -57,7 +72,7 @@ const dialogId = `skill-modal-${page.id}`;
           type="submit"
           autofocus
           aria-label="닫기"
-          class="rounded-full bg-neutral-200 px-2 py-1 text-sm text-neutral-500 hover:bg-neutral-100"
+          class="hover:bg-notion/5 rounded-md px-2 py-1 text-sm text-neutral-500"
         >
           ✕
         </button>
