@@ -6,4 +6,4 @@ interface Props {
 const { email } = Astro.props;
 ---
 
-<a href={`mailto:${email}`}>{email}</a>
+<a href={`mailto:${email}`} class="no-underline hover:text-blue-500">{email}</a>

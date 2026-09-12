@@ -4,11 +4,11 @@ import PhoneContact from "./PhoneContact.astro";
 ---
 
 <section class="flex flex-col gap-6">
-  <div class="flex flex-col gap-4">
-    <h1 class="text-4xl font-bold tracking-wider">이상헌</h1>
-    <span class="text-gray-500">프론트엔드 엔지니어</span>
+  <div class="flex flex-col gap-1">
+    <h1 class="text-hero leading-[1.2] font-bold">이상헌</h1>
+    <span class="text-notion/65 text-base">프론트엔드 엔지니어</span>
   </div>
-  <div class="leading-[1.7]">
+  <div class="flex flex-col gap-3 text-base leading-[1.7]">
     <p>
       버킷플레이스(오늘의집)에서 2년 9개월간 B2B 운영 플랫폼, 소비자와 파트너를 위한 서비스, 사내
       업무 시스템을 두루 만들어온 프론트엔드 엔지니어입니다.
@@ -18,11 +18,11 @@ import PhoneContact from "./PhoneContact.astro";
       경험했습니다.
     </p>
   </div>
-  <div class="flex flex-row items-center gap-2 text-neutral-500">
+  <div class="text-notion/50 flex flex-row items-center gap-2 text-sm">
     <EmailContact email="themion@naver.com" />
-    <div class="h-5 w-px bg-neutral-500"></div>
+    <div class="bg-notion/25 h-3.5 w-px"></div>
     <PhoneContact phone="010-2033-5504" />
-    <div class="h-5 w-px bg-neutral-500"></div>
-    <a href="https://github.com/Themion">GitHub</a>
+    <div class="bg-notion/25 h-3.5 w-px"></div>
+    <a href="https://github.com/Themion" class="no-underline hover:text-blue-500">GitHub</a>
   </div>
 </section>
