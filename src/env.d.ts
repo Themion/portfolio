@@ -5,6 +5,7 @@ interface ImportMetaEnv {
   NOTION_PROJECTS_DATASOURCE: string;
   NOTION_COMPANY_DATASOURCE: string;
   NOTION_TECHNICAL_DECISIONS_DATASOURCE: string;
+  NOTION_TECH_STACK_TYPE_DATASOURCE: string;
 }
 
 interface ImportMeta {

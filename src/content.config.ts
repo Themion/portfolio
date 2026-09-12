@@ -13,6 +13,14 @@ const techStack = createCollection({
   dataSourceId: import.meta.env.NOTION_TECH_STACK_DATASOURCE
 });
 
+const techStackType = createCollection({
+  name: 'techStackType',
+  dataSourceId: import.meta.env.NOTION_TECH_STACK_TYPE_DATASOURCE,
+  references: {
+    "사용 기술": 'techStack'
+  }
+});
+
 const decision = createCollection({
   name: 'decision',
   dataSourceId: import.meta.env.NOTION_TECHNICAL_DECISIONS_DATASOURCE,
@@ -32,4 +40,11 @@ const education = createCollection({
   dataSourceId: import.meta.env.NOTION_EDUCATIONS_DATASOURCE,
 });
 
-export const collections = { company, techStack, project, decision, education };
+export const collections = {
+  company,
+  techStack,
+  project,
+  decision,
+  education,
+  techStackType,
+};
