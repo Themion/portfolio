@@ -8,9 +8,9 @@ interface Props {
 const { label = "" } = Astro.props;
 ---
 
-<label class="group flex flex-row items-center gap-2 text-sm text-notion/70 [&_*]:ease-in-out">
+<label class="group text-notion/70 flex flex-row items-center gap-2 text-sm [&_*]:ease-in-out">
   <span
-    class="relative h-(--height) w-(--width) rounded-full bg-notion/20 transition-colors group-has-[input:checked]:bg-blue-500"
+    class="bg-notion/20 relative h-(--height) w-(--width) rounded-full transition-colors group-has-[input:checked]:bg-blue-500"
     style={{
       "--width": "32px",
       "--height": "18px",
@@ -28,6 +28,6 @@ const { label = "" } = Astro.props;
         "--size": "calc(var(--height) - var(--padding) * 2)",
       }}></span>
   </span>
-  <input type="checkbox" data-filter="project" class="hidden" />
+  <input type="checkbox" data-filter="project" class="hidden" checked />
   <span>{label}</span>
 </label>

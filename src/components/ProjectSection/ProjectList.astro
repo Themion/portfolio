@@ -23,7 +23,7 @@ const projects = await getSortedEntries(
     <h3 class="text-xl font-bold">
       <Title property={company.data.properties["회사명"]} />
     </h3>
-    <p class="text-sm text-notion/50">
+    <p class="text-notion/50 text-sm">
       <DateValue property={company.data.properties["입사일"]} />
       {` ~ `}
       {
@@ -35,7 +35,12 @@ const projects = await getSortedEntries(
       }
     </p>
   </div>
-  <div class="flex flex-col gap-6">
+  <div
+    class="flex flex-col gap-(--project-gap)"
+    style={{
+      "--project-gap": "8px",
+    }}
+  >
     {projects.map((project) => <ProjectItem project={project} />)}
   </div>
 </div>
