@@ -1,1 +1,34 @@
 @import "tailwindcss";
+
+@theme {
+  --color-notion: rgb(55, 53, 47);
+
+  /* 아직 사용처 없음 — 도입 시 Tailwind 기본 색상으로 대체
+  --color-tag-fe-bg: rgba(46, 170, 220, 0.15); (bg-sky-100)
+  --color-tag-fe-text: #0b6493; (text-sky-800)
+  --color-tag-be-bg: rgba(255, 163, 68, 0.2); (bg-orange-100)
+  --color-tag-be-text: #9a5b13; (text-yellow-700)
+  --color-overlay: rgba(15, 15, 15, 0.45); (bg-neutral-950/45)
+  --color-surface: #ffffff; (bg-white)
+  */
+
+  --text-hero: 40px;
+  --text-subtitle: 16px; /* text-base와 동일 */
+  --text-body: 16px; /* text-base와 동일 */
+  --text-body-sm: 15px;
+  --text-meta: 14px; /* text-sm와 동일 */
+  --text-label-sm: 13px;
+  --text-section: 28px;
+  --text-category: 18px; /* text-lg와 동일 */
+  --text-company: 20px; /* text-xl와 동일 */
+  --text-icon-label: 12.5px;
+  --text-project-title: 16px; /* text-base와 동일 */
+  --text-project-meta: 13px;
+  --text-arrow: 11px;
+  --text-decision-title: 14px; /* text-sm와 동일 */
+  --text-decision-point: 14px; /* text-sm와 동일 */
+  --text-tag: 11px;
+  --text-arrow-sm: 10px;
+  --text-modal-title: 19px;
+  --text-modal-desc: 14.5px;
+}
