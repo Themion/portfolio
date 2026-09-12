@@ -30,10 +30,11 @@ const techStacks = await getEntries(properties["기술 스택"].relation);
     "[&::details-content]:transition-discrete", // content-visibility 조정
     "[&::details-content]:transition-[height,content-visibility] [&::details-content]:duration-(--duration)", // 애니메이션 설정
     "[&::details-content]:ease-in-out [&_*::after]:ease-in-out", // 애니메이션 timing function
-    "h-auto overflow-hidden opacity-100 transition-[height,margin-bottom,opacity] duration-(--duration) delay-0 ease-in-out", // 숨김 애니메이션 베이스(표시될 때는 모두 즉시 전환)
+    "h-auto overflow-hidden opacity-100 transition-[height,margin-bottom,opacity,border] duration-(--duration) delay-0 ease-in-out", // 숨김 애니메이션 베이스(표시될 때는 모두 즉시 전환)
     "[:has(input[type=checkbox][data-filter=project]:checked)_&[data-is-important=false]]:h-0", // 핵심 프로젝트만 보기 필터 적용 시 높이 0으로 축소
     "[:has(input[type=checkbox][data-filter=project]:checked)_&[data-is-important=false]]:-mb-6", // 부모 gap-6을 음수 마진으로 상쇄해 gap 튐 방지
     "[:has(input[type=checkbox][data-filter=project]:checked)_&[data-is-important=false]]:opacity-0", // 숨겨질 때는 시각적으로만 숨김(레이아웃은 height/margin이 담당)
+    "[:has(input[type=checkbox][data-filter=project]:checked)_&[data-is-important=false]]:border-transparent", // 숨겨질 때는 시각적으로만 숨김(레이아웃은 height/margin이 담당)
     "[:has(input[type=checkbox][data-filter=project]:checked)_&[data-is-important=false]]:delay-[0s,0s,var(--duration)]", // height/margin은 즉시, visibility 전환만 애니메이션이 끝난 뒤로 지연
     "rounded-lg border border-notion/9", // 카드 테두리
   )}
