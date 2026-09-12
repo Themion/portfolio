@@ -18,8 +18,8 @@ const dialogId = `skill-modal-${page.id}`;
 <button
   type="button"
   class={twMerge(
-    "border-notion/9 group h-fit w-36 rounded-lg border p-4",
-    "flex flex-col items-center gap-1.5",
+    "border-notion/9 group h-fit w-36 rounded-lg border px-1 py-4",
+    "flex flex-col items-center",
     "mb-(--label-size) hover:mb-0 duration-(--duration) ease-linear",
   )}
   aria-haspopup="dialog"
@@ -40,9 +40,10 @@ const dialogId = `skill-modal-${page.id}`;
     property={properties["기술명"]}
     htmlProps={{
       class: twMerge(
-        "text-(length:--label-size) leading-none transition-[height,opacity,margin] ease-in-out",
+        "text-(length:--label-size) leading-none transition-all ease-in-out",
         "opacity-0 group-hover:opacity-100",
         "h-0 group-hover:h-(--label-size) duration-(--duration) ease-linear",
+        "m-0 group-hover:pt-1.5",
       ),
     }}
   />
