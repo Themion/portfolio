@@ -1,6 +1,6 @@
-import { APIErrorCode, isNotionClientError, type NotionClientError } from '@notionhq/client';
-import { QueryClient } from '@tanstack/query-core';
-import type { AstroIntegrationLogger } from 'astro';
+import { APIErrorCode, isNotionClientError, type NotionClientError } from "@notionhq/client";
+import { QueryClient } from "@tanstack/query-core";
+import type { AstroIntegrationLogger } from "astro";
 
 const DEFAULT_RETRY_DELAY_MS = 30_000;
 const DEFAULT_RATE_LIMIT_RETRY_SECONDS = 60;
@@ -8,14 +8,14 @@ const DEFAULT_RATE_LIMIT_RETRY_SECONDS = 60;
 // Notion's error type doesn't type `headers`, but responses use the standard fetch `Headers` object.
 const getRetryAfterSeconds = (headers: unknown) => {
   if (!(headers instanceof Headers)) return null;
-  const retryAfter = headers.get('retry-after');
+  const retryAfter = headers.get("retry-after");
   return retryAfter === null ? null : parseInt(retryAfter, 10);
 };
 
 // null means "don't retry"; otherwise the number of ms to wait before retrying.
 const getNotionRetryDelayMs = (error: NotionClientError): number | null => {
   switch (error.name) {
-    case 'APIResponseError':
+    case "APIResponseError":
       switch (error.code) {
         case APIErrorCode.RateLimited:
           return (getRetryAfterSeconds(error.headers) ?? DEFAULT_RATE_LIMIT_RETRY_SECONDS) * 1000;
@@ -25,7 +25,7 @@ const getNotionRetryDelayMs = (error: NotionClientError): number | null => {
         default:
           return null;
       }
-    case 'RequestTimeoutError':
+    case "RequestTimeoutError":
       return DEFAULT_RETRY_DELAY_MS;
     default:
       return null;
@@ -39,7 +39,7 @@ let queryClient: QueryClient | null = null;
 export const getQueryClient = (logger: AstroIntegrationLogger): QueryClient => {
   if (queryClient) return queryClient;
 
-  const notionLogger = logger.fork('notion');
+  const notionLogger = logger.fork("notion");
 
   queryClient = new QueryClient({
     defaultOptions: {
@@ -56,15 +56,17 @@ export const getQueryClient = (logger: AstroIntegrationLogger): QueryClient => {
             return false;
           }
 
-          notionLogger.warn(`Notion API error (${error.name}). retrying after ${delayMs / 1000} seconds...`);
+          notionLogger.warn(
+            `Notion API error (${error.name}). retrying after ${delayMs / 1000} seconds...`,
+          );
           return true;
         },
         retryDelay: (_failureCount, error) => {
           if (!isNotionClientError(error)) return 0;
           return getNotionRetryDelayMs(error) ?? 0;
-        }
-      }
-    }
+        },
+      },
+    },
   });
 
   return queryClient;

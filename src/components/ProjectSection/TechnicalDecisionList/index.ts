@@ -1,1 +1,1 @@
-export { default as TechnicalDecisionList } from './TechnicalDecisionList.astro';
+export { default as TechnicalDecisionList } from "./TechnicalDecisionList.astro";

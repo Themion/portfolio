@@ -1,15 +1,15 @@
 ---
-import type { NotionBlockProps } from '~/contents/types';
+import type { NotionBlockProps } from "~/contents/types";
 
-import { RichText } from '../rich-text';
+import { RichText } from "../rich-text";
 
-type Props = NotionBlockProps<'embed'>;
+type Props = NotionBlockProps<"embed">;
 
 const { block } = Astro.props;
 ---
 
 <figure class="notion-block-figure">
-  <iframe class="notion-block-embed" src={block.embed.url} title="Embedded content" />
+  <iframe class="notion-block-embed" src={block.embed.url} title="Embedded content"></iframe>
   {
     block.embed.caption.length > 0 && (
       <figcaption class="notion-block-figcaption">

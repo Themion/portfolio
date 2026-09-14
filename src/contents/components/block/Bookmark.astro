@@ -1,13 +1,19 @@
 ---
-import type { NotionBlockProps } from '~/contents/types';
+import type { NotionBlockProps } from "~/contents/types";
 
-import { RichText } from '../rich-text';
+import { RichText } from "../rich-text";
 
-type Props = NotionBlockProps<'bookmark'>;
+type Props = NotionBlockProps<"bookmark">;
 
 const { block } = Astro.props;
 ---
 
 <a class="notion-block-bookmark" href={block.bookmark.url}>
-  {block.bookmark.caption.length > 0 ? <RichText richText={block.bookmark.caption} /> : block.bookmark.url}
+  {
+    block.bookmark.caption.length > 0 ? (
+      <RichText richText={block.bookmark.caption} />
+    ) : (
+      block.bookmark.url
+    )
+  }
 </a>

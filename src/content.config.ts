@@ -1,42 +1,42 @@
-import { createCollection } from '~/contents';
+import { createCollection } from "~/contents";
 
 const company = createCollection({
-  name: 'company',
+  name: "company",
   dataSourceId: import.meta.env.NOTION_COMPANY_DATASOURCE,
   references: {
-    '연결 프로젝트': 'project',
-  }
+    "연결 프로젝트": "project",
+  },
 });
 
 const techStack = createCollection({
-  name: 'techStack',
-  dataSourceId: import.meta.env.NOTION_TECH_STACK_DATASOURCE
+  name: "techStack",
+  dataSourceId: import.meta.env.NOTION_TECH_STACK_DATASOURCE,
 });
 
 const techStackType = createCollection({
-  name: 'techStackType',
+  name: "techStackType",
   dataSourceId: import.meta.env.NOTION_TECH_STACK_TYPE_DATASOURCE,
   references: {
-    "사용 기술": 'techStack'
-  }
+    "사용 기술": "techStack",
+  },
 });
 
 const decision = createCollection({
-  name: 'decision',
+  name: "decision",
   dataSourceId: import.meta.env.NOTION_TECHNICAL_DECISIONS_DATASOURCE,
 });
 
 const project = createCollection({
-  name: 'project',
+  name: "project",
   dataSourceId: import.meta.env.NOTION_PROJECTS_DATASOURCE,
   references: {
-    "기술 스택": 'techStack',
-    "기술적 의사결정": 'decision'
-  }
+    "기술 스택": "techStack",
+    "기술적 의사결정": "decision",
+  },
 });
 
 const education = createCollection({
-  name: 'education',
+  name: "education",
   dataSourceId: import.meta.env.NOTION_EDUCATIONS_DATASOURCE,
 });
 

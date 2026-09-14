@@ -1,2 +1,2 @@
-export * from './notion';
-export * from './query';
+export * from "./notion";
+export * from "./query";

@@ -1,10 +1,10 @@
 ---
-import type { NotionBlockProps } from '~/contents/types';
-import { downloadFile } from '~/contents/utils/download-file';
+import type { NotionBlockProps } from "~/contents/types";
+import { downloadFile } from "~/contents/utils/download-file";
 
-import { RichText } from '../rich-text';
+import { RichText } from "../rich-text";
 
-type Props = NotionBlockProps<'video'>;
+type Props = NotionBlockProps<"video">;
 
 const { block } = Astro.props;
 
@@ -15,12 +15,12 @@ const youtubeRegex =
 const getYoutubeUrl = (url: string) => {
   const capturedGroups = youtubeRegex.exec(url)?.groups;
   if (capturedGroups === undefined) return null;
-  return `https://www.youtube.com/embed/${capturedGroups['youtubeId']}`;
+  return `https://www.youtube.com/embed/${capturedGroups["youtubeId"]}`;
 };
 
 const hasCaption = block.video.caption.length > 0;
-const fileSrc = block.video.type === 'file' ? await downloadFile(block.video.file.url) : null;
-const youtubeUrl = block.video.type === 'external' ? getYoutubeUrl(block.video.external.url) : null;
+const fileSrc = block.video.type === "file" ? await downloadFile(block.video.file.url) : null;
+const youtubeUrl = block.video.type === "external" ? getYoutubeUrl(block.video.external.url) : null;
 ---
 
 {
@@ -60,8 +60,8 @@ const youtubeUrl = block.video.type === 'external' ? getYoutubeUrl(block.video.e
 {
   !fileSrc && !youtubeUrl && (
     <p class="notion-block-unsupported">
-      External video ({block.video.type === 'external' ? block.video.external.url : ''}) is not supported yet: please
-      upload the video file directly or to YouTube.
+      External video ({block.video.type === "external" ? block.video.external.url : ""}) is not
+      supported yet: please upload the video file directly or to YouTube.
     </p>
   )
 }

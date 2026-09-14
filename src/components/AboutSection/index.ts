@@ -1,1 +1,1 @@
-export { default as AboutSection } from './AboutSection.astro'
+export { default as AboutSection } from "./AboutSection.astro";

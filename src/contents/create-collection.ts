@@ -1,8 +1,8 @@
-import type { Loader } from 'astro/loaders';
-import { defineCollection } from 'astro:content';
+import type { Loader } from "astro/loaders";
+import { defineCollection } from "astro:content";
 
-import { getDataSource } from './data-source';
-import { createDataSourceSchema } from './data-source-schema';
+import { getDataSource } from "./data-source";
+import { createDataSourceSchema } from "./data-source-schema";
 
 export interface CreateCollectionParams {
   name: string;
@@ -10,11 +10,7 @@ export interface CreateCollectionParams {
   references?: Record<string, string>;
 }
 
-export const createCollection = ({
-  name,
-  dataSourceId,
-  references,
-}: CreateCollectionParams) => {
+export const createCollection = ({ name, dataSourceId, references }: CreateCollectionParams) => {
   const getEntries = getDataSource(dataSourceId);
 
   return defineCollection({
@@ -31,5 +27,5 @@ export const createCollection = ({
       },
       createSchema: () => createDataSourceSchema(dataSourceId, references),
     } satisfies Loader,
-  })
-}
+  });
+};
