@@ -5,15 +5,18 @@ import { withChildren } from "./block";
 import { getQueryClient, notionClient } from "./client";
 import { getCommonInfiniteQueryOptions } from "./common";
 
-const getDataSourceQueryKey = (dataSourceId: string) => ['data-source', dataSourceId] satisfies QueryKey;
+const getDataSourceQueryKey = (dataSourceId: string) =>
+  ["data-source", dataSourceId] satisfies QueryKey;
 
-const getDataSourceQueryOptions = (data_source_id: string) => getCommonInfiniteQueryOptions({
-  queryKey: getDataSourceQueryKey(data_source_id),
-  queryFn: ({ pageParam }) => notionClient.dataSources.query({
-    data_source_id,
-    start_cursor: pageParam,
-  }),
-})
+const getDataSourceQueryOptions = (data_source_id: string) =>
+  getCommonInfiniteQueryOptions({
+    queryKey: getDataSourceQueryKey(data_source_id),
+    queryFn: ({ pageParam }) =>
+      notionClient.dataSources.query({
+        data_source_id,
+        start_cursor: pageParam,
+      }),
+  });
 
 export const getDataSource = (dataSourceId: string) => {
   const queryOptions = getDataSourceQueryOptions(dataSourceId);
@@ -25,4 +28,4 @@ export const getDataSource = (dataSourceId: string) => {
     const rawDataSource = await queryClient.infiniteQuery(queryOptions);
     return await Promise.all(rawDataSource.map(techStackMapper));
   };
-}
+};

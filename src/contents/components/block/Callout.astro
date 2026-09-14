@@ -1,17 +1,17 @@
 ---
-import type { NotionBlockProps } from '~/contents/types';
+import type { NotionBlockProps } from "~/contents/types";
 
-import { RichText } from '../rich-text';
-import NotionBlocks from './NotionBlocks.astro';
+import { RichText } from "../rich-text";
+import NotionBlocks from "./NotionBlocks.astro";
 
-type Props = NotionBlockProps<'callout'>;
+type Props = NotionBlockProps<"callout">;
 
 const { block, components } = Astro.props;
 
 const color = block.callout.color;
 ---
 
-<div class="notion-block-callout" data-notion-color={color !== 'default' ? color : undefined}>
+<div class="notion-block-callout" data-notion-color={color !== "default" ? color : undefined}>
   <RichText richText={block.callout.rich_text} />
   {block.has_children && <NotionBlocks blocks={block.children} components={components} />}
 </div>

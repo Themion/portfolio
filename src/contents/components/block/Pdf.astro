@@ -1,14 +1,17 @@
 ---
-import type { NotionBlockProps } from '~/contents/types';
-import { downloadFile } from '~/contents/utils/download-file';
+import type { NotionBlockProps } from "~/contents/types";
+import { downloadFile } from "~/contents/utils/download-file";
 
-import { RichText } from '../rich-text';
+import { RichText } from "../rich-text";
 
-type Props = NotionBlockProps<'pdf'>;
+type Props = NotionBlockProps<"pdf">;
 
 const { block } = Astro.props;
 
-const src = block.pdf.type === 'external' ? await downloadFile(block.pdf.external.url) : await downloadFile(block.pdf.file.url);
+const src =
+  block.pdf.type === "external"
+    ? await downloadFile(block.pdf.external.url)
+    : await downloadFile(block.pdf.file.url);
 const hasCaption = block.pdf.caption.length > 0;
 ---
 

@@ -1,15 +1,17 @@
 ---
-import type { Block, NotionBlockProps } from '~/contents/types';
+import type { Block, NotionBlockProps } from "~/contents/types";
 
-import { RichText } from '../rich-text';
+import { RichText } from "../rich-text";
 
-type Props = NotionBlockProps<'table'>;
+type Props = NotionBlockProps<"table">;
 
 const { block } = Astro.props;
 
 const { has_row_header, has_column_header } = block.table;
 const rows = block.has_children
-  ? block.children.filter((child): child is Extract<Block, { type: 'table_row' }> => child.type === 'table_row')
+  ? block.children.filter(
+      (child): child is Extract<Block, { type: "table_row" }> => child.type === "table_row",
+    )
   : [];
 ---
 
@@ -18,8 +20,9 @@ const rows = block.has_children
     rows.map((row, rowIndex) => (
       <tr>
         {row.table_row.cells.map((cell, columnIndex) => {
-          const isHeader = (has_row_header && rowIndex === 0) || (has_column_header && columnIndex === 0);
-          const Cell = isHeader ? 'th' : 'td';
+          const isHeader =
+            (has_row_header && rowIndex === 0) || (has_column_header && columnIndex === 0);
+          const Cell = isHeader ? "th" : "td";
           return (
             <Cell>
               <RichText richText={cell} />

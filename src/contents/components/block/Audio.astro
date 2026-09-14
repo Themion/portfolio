@@ -1,14 +1,17 @@
 ---
-import type { NotionBlockProps } from '~/contents/types';
-import { downloadFile } from '~/contents/utils/download-file';
+import type { NotionBlockProps } from "~/contents/types";
+import { downloadFile } from "~/contents/utils/download-file";
 
-type Props = NotionBlockProps<'audio'>;
+type Props = NotionBlockProps<"audio">;
 
 const { block } = Astro.props;
 
-const src = block.audio.type === 'external' ? block.audio.external.url : await downloadFile(block.audio.file.url);
+const src =
+  block.audio.type === "external"
+    ? block.audio.external.url
+    : await downloadFile(block.audio.file.url);
 ---
 
 {/* Notion audio blocks carry no caption-track source. */}
 {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-<audio class="notion-block-audio" controls src={src} />
+<audio class="notion-block-audio" controls src={src}></audio>

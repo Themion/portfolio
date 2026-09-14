@@ -13,17 +13,19 @@ interface Identifiable {
 
 type WithChildren<T> = T & {
   children: Block[];
-}
+};
 
-export const getBlockQueryKey = (block_id: string) => ['block-children', block_id];
+export const getBlockQueryKey = (block_id: string) => ["block-children", block_id];
 
-export const getBlockQueryOptions = (block_id: string) => getCommonInfiniteQueryOptions({
-  queryKey: getBlockQueryKey(block_id),
-  queryFn: ({ pageParam }) => notionClient.blocks.children.list({
-    block_id,
-    start_cursor: pageParam,
-  }),
-})
+export const getBlockQueryOptions = (block_id: string) =>
+  getCommonInfiniteQueryOptions({
+    queryKey: getBlockQueryKey(block_id),
+    queryFn: ({ pageParam }) =>
+      notionClient.blocks.children.list({
+        block_id,
+        start_cursor: pageParam,
+      }),
+  });
 
 export const getBlockQuery = (logger: AstroIntegrationLogger) => {
   const queryClient = getQueryClient(logger);
@@ -31,7 +33,7 @@ export const getBlockQuery = (logger: AstroIntegrationLogger) => {
   return async (blockId: string) => {
     return await queryClient.infiniteQuery(getBlockQueryOptions(blockId));
   };
-}
+};
 
 export const withChildren = (logger: AstroIntegrationLogger) => {
   const getChildrenByBlockId = getBlockQuery(logger);
@@ -42,10 +44,9 @@ export const withChildren = (logger: AstroIntegrationLogger) => {
     }
 
     const rawChildren = await getChildrenByBlockId(block.id);
-    const children = await Promise.all(rawChildren.map((withChildren(logger))));
+    const children = await Promise.all(rawChildren.map(withChildren(logger)));
 
     // Assumes the integration never gets back a permission-restricted (partial) block.
     return Object.assign(structuredClone(block), { children }) as WithChildren<T>;
   };
-}
-  
+};

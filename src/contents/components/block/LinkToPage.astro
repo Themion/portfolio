@@ -1,14 +1,19 @@
 ---
-import type { NotionBlockProps } from '~/contents/types';
+import type { NotionBlockProps } from "~/contents/types";
 
-type Props = NotionBlockProps<'link_to_page'>;
+type Props = NotionBlockProps<"link_to_page">;
 
 const { block } = Astro.props;
 
 // No title without a separate fetch, so link by id instead of a resolved preview.
 const target = block.link_to_page;
-const id = target.type === 'page_id' ? target.page_id : target.type === 'database_id' ? target.database_id : target.comment_id;
-const href = `https://www.notion.so/${id.replaceAll('-', '')}`;
+const id =
+  target.type === "page_id"
+    ? target.page_id
+    : target.type === "database_id"
+      ? target.database_id
+      : target.comment_id;
+const href = `https://www.notion.so/${id.replaceAll("-", "")}`;
 ---
 
 <a class="notion-block-link-to-page" href={href}>{href}</a>

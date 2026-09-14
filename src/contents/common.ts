@@ -12,14 +12,15 @@ export type InfiniteNotionQueryOptions<T> = InfiniteQueryExecuteOptions<
   T[],
   QueryKey,
   string | null
->
+>;
 
 export const getCommonInfiniteQueryOptions = <T>(
-  queryOptions: Omit<InfiniteNotionQueryOptions<T>, 'initialPageParam'>,
-) => ({
-  pages: Infinity,
-  initialPageParam: null,
-  getNextPageParam: (lastPage) => lastPage.next_cursor,
-  select: (data) => data.pages.flatMap((page) => page.results),
-  ...queryOptions,
-} satisfies InfiniteNotionQueryOptions<T>);
+  queryOptions: Omit<InfiniteNotionQueryOptions<T>, "initialPageParam">,
+) =>
+  ({
+    pages: Infinity,
+    initialPageParam: null,
+    getNextPageParam: (lastPage) => lastPage.next_cursor,
+    select: (data) => data.pages.flatMap((page) => page.results),
+    ...queryOptions,
+  }) satisfies InfiniteNotionQueryOptions<T>;

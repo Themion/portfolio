@@ -1,1 +1,1 @@
-export { default as RichText } from './RichText.astro';
+export { default as RichText } from "./RichText.astro";

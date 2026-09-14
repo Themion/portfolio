@@ -1,6 +1,6 @@
-import { randomUUID } from 'node:crypto';
+import { randomUUID } from "node:crypto";
 
-import type { Block, ListGroupBlock, ListGroupItemType, ListGroupType } from '~/contents/types';
+import type { Block, ListGroupBlock, ListGroupItemType, ListGroupType } from "~/contents/types";
 
 // Keyed by every `_list_item` type in `Block['type']` (not `Partial`), so adding a new one to
 // `Block` forces a mapping to be added here too, instead of silently falling through as ungrouped.
@@ -9,13 +9,14 @@ type ListItemGroupType = {
 };
 
 const LIST_ITEM_GROUP_TYPE: ListItemGroupType = {
-  bulleted_list_item: 'bulleted_list',
-  numbered_list_item: 'numbered_list',
+  bulleted_list_item: "bulleted_list",
+  numbered_list_item: "numbered_list",
 };
 
 // `type in object` alone doesn't narrow `type`'s own union down to `object`'s keys, so a named
 // predicate is needed to actually get `keyof ListItemGroupType` back out of the check.
-const isListItemType = (type: Block['type']): type is keyof ListItemGroupType => type in LIST_ITEM_GROUP_TYPE;
+const isListItemType = (type: Block["type"]): type is keyof ListItemGroupType =>
+  type in LIST_ITEM_GROUP_TYPE;
 
 export const groupListItems = (input: Block[]): Block[] => {
   const grouped: Block[] = [];
@@ -36,7 +37,12 @@ export const groupListItems = (input: Block[]): Block[] => {
         block as Extract<Block, { type: ListGroupItemType }>,
       );
     } else {
-      grouped.push({ type: groupType, id: randomUUID(), has_children: true, children: [block] } as Block);
+      grouped.push({
+        type: groupType,
+        id: randomUUID(),
+        has_children: true,
+        children: [block],
+      } as Block);
     }
   }
 

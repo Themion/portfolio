@@ -1,17 +1,17 @@
 ---
-import type { NotionBlockProps } from '~/contents/types';
+import type { NotionBlockProps } from "~/contents/types";
 
-import { RichText } from '../rich-text';
-import NotionBlocks from './NotionBlocks.astro';
+import { RichText } from "../rich-text";
+import NotionBlocks from "./NotionBlocks.astro";
 
-type Props = NotionBlockProps<'toggle'>;
+type Props = NotionBlockProps<"toggle">;
 
 const { block, components } = Astro.props;
 
 const color = block.toggle.color;
 ---
 
-<details class="notion-block-details" data-notion-color={color !== 'default' ? color : undefined}>
+<details class="notion-block-details" data-notion-color={color !== "default" ? color : undefined}>
   <summary class="notion-block-summary">
     <RichText richText={block.toggle.rich_text} />
   </summary>
