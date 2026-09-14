@@ -1,7 +1,7 @@
 import { defineConfig } from 'eslint/config';
-import eslintConfigPrettier from 'eslint-config-prettier';
 import eslintPluginAstro from 'eslint-plugin-astro';
 import eslintPluginJsxA11y from 'eslint-plugin-jsx-a11y';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import eslintPluginSimpleImportSort from 'eslint-plugin-simple-import-sort';
 import tseslint from 'typescript-eslint';
 
@@ -33,6 +33,8 @@ export default defineConfig([
     },
   },
 
-  // Must stay last: disables ESLint formatting rules that would conflict with Prettier
-  eslintConfigPrettier,
+  // Must stay last: runs Prettier as an ESLint rule (`eslint --fix` now also applies
+  // Prettier formatting, including tailwind class sorting) and disables ESLint
+  // formatting rules that would conflict with it
+  eslintPluginPrettierRecommended,
 ]);
