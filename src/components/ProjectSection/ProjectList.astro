@@ -1,5 +1,6 @@
 ---
 import { type CollectionEntry } from "astro:content";
+import { twMerge } from "tailwind-merge";
 
 import { DateValue, Title } from "~/contents/components";
 import { getSortedEntries } from "~/utils/get-sorted-entries";
@@ -18,8 +19,14 @@ const projects = await getSortedEntries(
 );
 ---
 
-<div class="grid grid-cols-1 md:grid-cols-[250px_1fr]">
-  <div class="sticky top-(--gap) flex h-fit flex-col gap-2">
+<div class="grid grid-cols-1 gap-2 md:grid-cols-[250px_1fr]">
+  <div
+    class={twMerge(
+      "sticky flex h-fit flex-col gap-2",
+      "top-0 py-(--gap) md:top-(--gap) md:py-0 z-100",
+      "bg-linear-to-b from-0% from-white to-100% via-white to-transparent via-[calc(100%-var(--gap))]",
+    )}
+  >
     <h3 class="text-xl font-bold">
       <Title property={company.data.properties["회사명"]} />
     </h3>
