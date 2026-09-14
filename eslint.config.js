@@ -37,4 +37,17 @@ export default defineConfig([
   // Prettier formatting, including tailwind class sorting) and disables ESLint
   // formatting rules that would conflict with it
   eslintPluginPrettierRecommended,
+
+  // eslint-plugin-astro lints <script> blocks as virtual `*.astro/*.js(x)` files, but
+  // eslint-plugin-prettier still formats those with the `astro` parser (inferred from the
+  // `.astro` in the virtual path), which crashes on multi-statement scripts. Prettier still
+  // formats these scripts correctly on its own (`prettier --write`, editor integration), so
+  // just skip the redundant, broken ESLint-driven pass.
+  // See https://github.com/withastro/prettier-plugin-astro/issues/407
+  {
+    files: ["**/*.astro/*.js", "**/*.astro/*.ts"],
+    rules: {
+      "prettier/prettier": "off",
+    },
+  },
 ]);
