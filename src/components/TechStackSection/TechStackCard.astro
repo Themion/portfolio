@@ -18,10 +18,11 @@ const dialogId = `skill-modal-${page.id}`;
 <button
   type="button"
   class={twMerge(
-    "border-notion/9 group h-fit w-36 rounded-lg border px-1 py-4",
+    "border-notion/9 group h-fit w-36 rounded-lg border px-1 py-(--padding)",
     "flex flex-col items-center",
     "duration-(--duration) ease-linear",
-    "[@media(hover:hover)]:mb-(--margin-bottom) [@media(hover:hover)]:hover:mb-0",
+    "[@media(hover:hover)]:mb-(--label-size) [@media(hover:hover)]:hover:mb-0",
+    "[@media(hover:hover)]:hover:pb-(--padding-hover)",
     "[@media(hover:hover)]:gap-0 [@media(hover:hover)]:hover:gap-(--gap)",
   )}
   aria-haspopup="dialog"
@@ -29,7 +30,8 @@ const dialogId = `skill-modal-${page.id}`;
   style={{
     "--label-size": "14px",
     "--gap": "6px",
-    "--margin-bottom": "calc(var(--label-size) + var(--gap))",
+    "--padding": "16px",
+    "--padding-hover": "calc(var(--padding) - var(--gap))",
     "--duration": "100ms",
   }}
 >
