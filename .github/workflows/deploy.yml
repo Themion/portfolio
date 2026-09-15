@@ -3,6 +3,9 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  schedule:
+    # 매일 00:00 KST(UTC+9) = 전날 15:00 UTC — Notion 콘텐츠 변경을 코드 push 없이도 반영
+    - cron: "0 15 * * *"
   workflow_dispatch:
 
 permissions:
