@@ -28,7 +28,6 @@ jobs:
         uses: withastro/action@v6
         with:
           node-version: 24
-          package-manager: pnpm@latest
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_COMPANY_DATASOURCE: ${{ secrets.NOTION_COMPANY_DATASOURCE }}
