@@ -71,7 +71,7 @@ const techStacks = await getEntries(properties["기술 스택"].relation);
     </div>
   </summary>
   <div class="flex flex-col gap-4 px-4 pt-2 pb-5 pl-10">
-    <div class="flex flex-row gap-2">
+    <div class="flex flex-row flex-wrap gap-2">
       {
         techStacks.map((techStack) => (
           <TechStackIcon property={techStack.data.properties["아이콘"]} />
