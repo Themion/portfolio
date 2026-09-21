@@ -36,9 +36,17 @@ const { decision } = Astro.props;
     )}
   >
     <h6 class="text-sm font-medium">
-      <Title property={decision.data.properties["제목"]} />
+      <Title
+        property={decision.data.properties["제목"]}
+        htmlProps={{
+          style: {
+            paddingRight: "6px",
+            border: "1px solid transparent",
+          },
+        }}
+      />
+      <TechnicalDecisionBadge property={decision.data.properties["구분"]} />
     </h6>
-    <TechnicalDecisionBadge property={decision.data.properties["구분"]} />
   </summary>
   <div class="pl-6 text-sm/6">
     <NotionBlocks blocks={decision.data.children} />
