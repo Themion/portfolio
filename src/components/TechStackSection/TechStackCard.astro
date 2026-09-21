@@ -18,12 +18,12 @@ const dialogId = `skill-modal-${page.id}`;
 <button
   type="button"
   class={twMerge(
-    "border-notion/9 group h-fit w-36 rounded-lg border px-1 py-(--padding)",
+    "border-notion/9 group h-fit w-36 rounded-lg border px-1 pt-(--padding)",
     "flex flex-col items-center",
     "duration-(--duration) ease-linear",
     "[@media(hover:hover)]:mb-(--label-size) [@media(hover:hover)]:hover:mb-0",
-    "[@media(hover:hover)]:hover:pb-(--padding-hover)",
-    "[@media(hover:hover)]:gap-0 [@media(hover:hover)]:hover:gap-(--gap)",
+    "pb-(--padding-hover) [@media(hover:hover)]:pb-(--padding) [@media(hover:hover)]:hover:pb-(--padding-hover)",
+    "gap-(--gap) [@media(hover:hover)]:gap-0 [@media(hover:hover)]:hover:gap-(--gap)",
   )}
   aria-haspopup="dialog"
   data-skill-trigger={dialogId}
