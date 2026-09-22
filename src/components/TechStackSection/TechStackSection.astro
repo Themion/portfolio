@@ -10,7 +10,7 @@ const techStackTypes = await getSortedCollections(
 ---
 
 <section class="flex flex-col gap-6">
-  <h2 class="text-3xl font-bold">Tech Stacks</h2>
+  <h2 class="text-(length:--text-section) font-bold">Tech Stacks</h2>
   <div class="flex flex-col gap-4">
     {techStackTypes.map((techStackType) => <TechStackGroup techStackType={techStackType} />)}
   </div>
