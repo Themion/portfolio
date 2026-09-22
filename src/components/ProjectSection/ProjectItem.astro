@@ -81,14 +81,14 @@ const techStacks = await getEntries(properties["기술 스택"].relation);
     <div
       class={twMerge(
         "flex flex-col gap-2",
-        "[&_h5]:text-label-sm [&_h5]:text-notion/50 [&_h5]:font-bold",
+        "[&_h5]:text-(length:--text-label-sm) [&_h5]:text-notion/50 [&_h5]:font-bold [&_h5]:pb-0.5",
       )}
     >
-      <div class="text-body-sm">
+      <div class="text-body-sm flex flex-col gap-1">
         <h5>배경</h5>
         <RichTextValue property={properties["배경"]} />
       </div>
-      <div class="text-body-sm">
+      <div class="text-body-sm flex flex-col gap-1">
         <h5>내가 한 일</h5>
         <NotionBlocks blocks={children} />
       </div>
@@ -96,7 +96,7 @@ const techStacks = await getEntries(properties["기술 스택"].relation);
         <h5>기술적 의사결정</h5>
         <TechnicalDecisionList project={project} />
       </div>
-      <div class="text-body-sm">
+      <div class="text-body-sm flex flex-col gap-1">
         <h5>결과</h5>
         <RichTextValue property={properties["결과"]} />
       </div>
