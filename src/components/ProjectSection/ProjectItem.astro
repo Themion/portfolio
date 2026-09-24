@@ -1,9 +1,9 @@
 ---
+import type { CollectionEntry, CollectionKey } from "astro:content";
 import { getEntries } from "astro:content";
-import { type CollectionEntry } from "astro:content";
 import { twMerge } from "tailwind-merge";
 
-import { DateValue, NotionBlocks, RichTextValue, Title } from "~/contents/components";
+import { DateValue, NotionBlocks, Title } from "~/contents/components";
 
 import { TechnicalDecisionList } from "./TechnicalDecisionList";
 import TechStackIcon from "./TechStackIcon.astro";
@@ -18,6 +18,14 @@ const {
 } = project;
 
 const techStacks = await getEntries(properties["기술 스택"].relation);
+const backgrounds = await getEntries(properties["배경"].relation);
+const results = await getEntries(properties["결과"].relation);
+
+const toBlocks = <Key extends CollectionKey>(entries: CollectionEntry<Key>[]) =>
+  entries.map((result) => result.data.children).filter(Boolean);
+
+const backgroundBlocks = toBlocks(backgrounds);
+const resultBlocks = toBlocks(results);
 ---
 
 <details
@@ -86,7 +94,7 @@ const techStacks = await getEntries(properties["기술 스택"].relation);
     >
       <div class="text-body-sm flex flex-col gap-1">
         <h5>배경</h5>
-        <RichTextValue property={properties["배경"]} />
+        {backgroundBlocks.map((blocks) => <NotionBlocks blocks={blocks} />)}
       </div>
       <div class="text-body-sm flex flex-col gap-1">
         <h5>내가 한 일</h5>
@@ -98,7 +106,7 @@ const techStacks = await getEntries(properties["기술 스택"].relation);
       </div>
       <div class="text-body-sm flex flex-col gap-1">
         <h5>결과</h5>
-        <RichTextValue property={properties["결과"]} />
+        {resultBlocks.map((blocks) => <NotionBlocks blocks={blocks} />)}
       </div>
     </div>
   </div>
