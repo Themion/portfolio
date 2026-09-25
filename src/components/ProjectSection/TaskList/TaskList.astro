@@ -3,7 +3,7 @@ import { type CollectionEntry } from "astro:content";
 
 import { getSortedEntries } from "~/utils/get-sorted-entries";
 
-import TechnicalDecisionItem from "./TechnicalDecisionItem.astro";
+import TaskItem from "./TaskItem.astro";
 
 interface Props {
   project: CollectionEntry<"project">;
@@ -20,7 +20,7 @@ const decisions = await getSortedEntries(
   {
     decisions.map((decision) => (
       <li>
-        <TechnicalDecisionItem decision={decision} />
+        <TaskItem decision={decision} />
       </li>
     ))
   }

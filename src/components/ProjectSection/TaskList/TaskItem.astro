@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge";
 import { Title } from "~/contents/components";
 import NotionBlocks from "~/contents/components/block/NotionBlocks.astro";
 
-import TechnicalDecisionBadge from "./TechnicalDecisionBadge.astro";
+import TaskBadge from "./TaskBadge.astro";
 
 interface Props {
   decision: CollectionEntry<"decision">;
@@ -45,7 +45,7 @@ const { decision } = Astro.props;
           },
         }}
       />
-      <TechnicalDecisionBadge property={decision.data.properties["구분"]} />
+      <TaskBadge property={decision.data.properties["구분"]} />
     </h6>
   </summary>
   <div class="pl-6 text-(length:--text-body-sm) leading-[1.6]">
