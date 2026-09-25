@@ -5,18 +5,18 @@ import { twMerge } from "tailwind-merge";
 import { Title } from "~/contents/components";
 import NotionBlocks from "~/contents/components/block/NotionBlocks.astro";
 
-import TechnicalDecisionBadge from "./TechnicalDecisionBadge.astro";
+import TaskBadge from "./TaskBadge.astro";
 
 interface Props {
-  decision: CollectionEntry<"decision">;
+  task: CollectionEntry<"task">;
 }
 
-const { decision } = Astro.props;
+const { task } = Astro.props;
 ---
 
 <details
   class={twMerge(
-    "group/decision",
+    "group/task",
     "[&::details-content]:h-0 [&::details-content]:overflow-hidden open:[&::details-content]:h-auto", // state 별 height 지정
     "[interpolate-size:allow-keywords]", // height 보간
     "[&::details-content]:transition-discrete", // content-visibility 조정
@@ -32,12 +32,12 @@ const { decision } = Astro.props;
       "flex flex-row items-center gap-2 rounded p-1",
       "cursor-pointer hover:bg-notion/4",
       "before:content-['▶'] before:text-(length:--text-arrow-sm) before:text-notion/40",
-      "before:duration-(--duration) group-open/decision:before:rotate-90", // after 애니메이션 추가
+      "before:duration-(--duration) group-open/task:before:rotate-90", // after 애니메이션 추가
     )}
   >
     <h6 class="text-(length:--text-body-sm) font-medium">
       <Title
-        property={decision.data.properties["제목"]}
+        property={task.data.properties["제목"]}
         htmlProps={{
           style: {
             paddingRight: "6px",
@@ -45,10 +45,10 @@ const { decision } = Astro.props;
           },
         }}
       />
-      <TechnicalDecisionBadge property={decision.data.properties["구분"]} />
+      <TaskBadge property={task.data.properties["구분"]} />
     </h6>
   </summary>
   <div class="pl-6 text-(length:--text-body-sm) leading-[1.6]">
-    <NotionBlocks blocks={decision.data.children} />
+    <NotionBlocks blocks={task.data.children} />
   </div>
 </details>

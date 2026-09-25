@@ -1,0 +1,27 @@
+---
+import { type CollectionEntry } from "astro:content";
+
+import { getSortedEntries } from "~/utils/get-sorted-entries";
+
+import TaskItem from "./TaskItem.astro";
+
+interface Props {
+  project: CollectionEntry<"project">;
+}
+
+const { project } = Astro.props;
+const tasks = await getSortedEntries(
+  project.data.properties["주요 기술 작업"].relation,
+  (task) => task.data.properties["순서"].number ?? 0,
+);
+---
+
+<ul>
+  {
+    tasks.map((task) => (
+      <li>
+        <TaskItem task={task} />
+      </li>
+    ))
+  }
+</ul>
