@@ -10,17 +10,17 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const decisions = await getSortedEntries(
-  project.data.properties["기술적 의사결정"].relation,
-  (decision) => decision.data.properties["순서"].number ?? 0,
+const tasks = await getSortedEntries(
+  project.data.properties["주요 기술 작업"].relation,
+  (task) => task.data.properties["순서"].number ?? 0,
 );
 ---
 
 <ul>
   {
-    decisions.map((decision) => (
+    tasks.map((task) => (
       <li>
-        <TaskItem decision={decision} />
+        <TaskItem task={task} />
       </li>
     ))
   }
