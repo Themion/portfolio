@@ -14,7 +14,7 @@ interface Props {
 
 const { project } = Astro.props;
 const {
-  data: { properties, children },
+  data: { properties },
 } = project;
 
 const techStacks = await getEntries(properties["기술 스택"].relation);
@@ -95,10 +95,6 @@ const resultBlocks = toBlocks(results);
       <div class="text-body-sm flex flex-col gap-1">
         <h5>배경</h5>
         {backgroundBlocks.map((blocks) => <NotionBlocks blocks={blocks} />)}
-      </div>
-      <div class="text-body-sm flex flex-col gap-1">
-        <h5>내가 한 일</h5>
-        <NotionBlocks blocks={children} />
       </div>
       <div>
         <h5>주요 기술 작업</h5>
