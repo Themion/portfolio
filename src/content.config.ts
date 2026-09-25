@@ -21,9 +21,9 @@ const techStackType = createCollection({
   },
 });
 
-const decision = createCollection({
-  name: "decision",
-  dataSourceId: import.meta.env.NOTION_TECHNICAL_DECISIONS_DATASOURCE,
+const task = createCollection({
+  name: "task",
+  dataSourceId: import.meta.env.NOTION_TASK_DATASOURCE,
 });
 
 const background = createCollection({
@@ -41,7 +41,7 @@ const project = createCollection({
   dataSourceId: import.meta.env.NOTION_PROJECTS_DATASOURCE,
   references: {
     "기술 스택": "techStack",
-    "기술적 의사결정": "decision",
+    "주요 기술 작업": "task",
     배경: "background",
     결과: "result",
   },
@@ -56,7 +56,7 @@ export const collections = {
   company,
   techStack,
   project,
-  decision,
+  task,
   education,
   techStackType,
   background,
