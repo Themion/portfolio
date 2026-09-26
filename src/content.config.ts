@@ -45,6 +45,16 @@ const project = createCollection({
     배경: "background",
     결과: "result",
   },
+  filter: {
+    and: [
+      {
+        property: "활성화",
+        checkbox: {
+          equals: true,
+        },
+      },
+    ],
+  },
 });
 
 const education = createCollection({
