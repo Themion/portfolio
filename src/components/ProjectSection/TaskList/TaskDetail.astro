@@ -32,7 +32,7 @@ const { block, components } = Astro.props;
   >
     <RichText richText={block.toggle.rich_text} />
   </summary>
-  <div class="pl-4">
+  <div class="pl-6">
     {block.has_children && <NotionBlocks blocks={block.children} components={components} />}
   </div>
 </details>
