@@ -4,6 +4,6 @@ export const getSortedEntries = async <C extends CollectionKey>(
   relation: Parameters<typeof getEntries<C>>[0],
   getOrder: (entry: CollectionEntry<C>) => number,
 ): Promise<CollectionEntry<C>[]> => {
-  const entries = await getEntries(relation);
+  const entries = (await getEntries(relation)).filter(Boolean);
   return entries.toSorted((a, b) => getOrder(a) - getOrder(b));
 };
