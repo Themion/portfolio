@@ -2,7 +2,7 @@ import type { AstroIntegrationLogger } from "astro";
 
 import type { Block } from "~/contents/types";
 
-import { getQueryClient, notionClient } from "./client";
+import { getQueryClient, notionClient } from "../client";
 import { getCommonInfiniteQueryOptions } from "./common";
 
 // Loose on purpose — shared by page and block objects, which only have `id`/`has_children` in common.

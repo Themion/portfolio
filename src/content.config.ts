@@ -1,4 +1,4 @@
-import { createCollection } from "~/contents";
+import { createCollection } from "~/contents/apis";
 
 const company = createCollection({
   name: "company",
