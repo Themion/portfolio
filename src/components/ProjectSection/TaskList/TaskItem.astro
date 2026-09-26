@@ -6,6 +6,7 @@ import { Title } from "~/contents/components";
 import NotionBlocks from "~/contents/components/block/NotionBlocks.astro";
 
 import TaskBadge from "./TaskBadge.astro";
+import TaskDetail from "./TaskDetail.astro";
 
 interface Props {
   task: CollectionEntry<"task">;
@@ -49,6 +50,11 @@ const { task } = Astro.props;
     </h6>
   </summary>
   <div class="pl-6 text-(length:--text-body-sm) leading-[1.6]">
-    <NotionBlocks blocks={task.data.children} />
+    <NotionBlocks
+      blocks={task.data.children}
+      components={{
+        toggle: TaskDetail,
+      }}
+    />
   </div>
 </details>
