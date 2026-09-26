@@ -1,4 +1,4 @@
-import { createCollection } from "~/contents";
+import { createCollection } from "~/contents/apis";
 
 const company = createCollection({
   name: "company",
@@ -44,6 +44,16 @@ const project = createCollection({
     "주요 기술 작업": "task",
     배경: "background",
     결과: "result",
+  },
+  filter: {
+    and: [
+      {
+        property: "활성화",
+        checkbox: {
+          equals: true,
+        },
+      },
+    ],
   },
 });
 

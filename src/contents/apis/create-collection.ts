@@ -1,6 +1,8 @@
 import type { Loader } from "astro/loaders";
 import { defineCollection } from "astro:content";
 
+import type { Filter } from "~/contents/types";
+
 import { getDataSource } from "./data-source";
 import { createDataSourceSchema } from "./data-source-schema";
 
@@ -8,10 +10,16 @@ export interface CreateCollectionParams {
   name: string;
   dataSourceId: string;
   references?: Record<string, string>;
+  filter?: Filter;
 }
 
-export const createCollection = ({ name, dataSourceId, references }: CreateCollectionParams) => {
-  const getEntries = getDataSource(dataSourceId);
+export const createCollection = ({
+  name,
+  dataSourceId,
+  references,
+  filter,
+}: CreateCollectionParams) => {
+  const getEntries = getDataSource(dataSourceId, filter);
 
   return defineCollection({
     loader: {

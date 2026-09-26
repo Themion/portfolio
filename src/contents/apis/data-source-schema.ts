@@ -2,7 +2,7 @@ import type { DataSourceObjectResponse } from "@notionhq/client";
 import { z } from "astro/zod";
 import { reference } from "astro:content";
 
-import { notionClient } from "./client";
+import { notionClient } from "../client";
 
 type PropertyConfig = DataSourceObjectResponse["properties"][string];
 
