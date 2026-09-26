@@ -3,7 +3,7 @@ import type { CollectionEntry, CollectionKey } from "astro:content";
 import { getEntries } from "astro:content";
 import { twMerge } from "tailwind-merge";
 
-import { DateValue, NotionBlocks, Title } from "~/contents/components";
+import { DateValue, NotionBlocks, RichTextValue, Title } from "~/contents/components";
 
 import { TaskList } from "./TaskList";
 import TechStackIcon from "./TechStackIcon.astro";
@@ -92,6 +92,9 @@ const resultBlocks = toBlocks(results);
         "[&_h5]:text-(length:--text-label-sm) [&_h5]:text-notion/50 [&_h5]:font-bold [&_h5]:pb-0.5",
       )}
     >
+      <div class="text-body-sm flex flex-col gap-1">
+        <RichTextValue property={properties["구성 인원"]} />
+      </div>
       <div class="text-body-sm flex flex-col gap-1">
         <h5>과제 진행 배경</h5>
         {backgroundBlocks.map((blocks) => <NotionBlocks blocks={blocks} />)}
