@@ -15,6 +15,6 @@ const Item = (components.bulleted_list_item ?? BulletedListItem) as AstroCompone
 >;
 ---
 
-<ul class="list-disc pl-6">
+<ul class="list-disc pl-6 [ul_li_ul_&]:list-[circle]">
   {block.children.map((item) => <Item block={item} components={components} />)}
 </ul>
