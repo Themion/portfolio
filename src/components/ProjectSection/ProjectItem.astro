@@ -93,15 +93,15 @@ const resultBlocks = toBlocks(results);
       )}
     >
       <div class="text-body-sm flex flex-col gap-1">
-        <h5>배경</h5>
+        <h5>과제 진행 배경</h5>
         {backgroundBlocks.map((blocks) => <NotionBlocks blocks={blocks} />)}
       </div>
       <div>
-        <h5>주요 기술 작업</h5>
+        <h5>주요 업무 내용</h5>
         <TaskList project={project} />
       </div>
       <div class="text-body-sm flex flex-col gap-1">
-        <h5>결과</h5>
+        <h5>성과</h5>
         {resultBlocks.map((blocks) => <NotionBlocks blocks={blocks} />)}
       </div>
     </div>
